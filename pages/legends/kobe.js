@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ContourBackground from '../../components/ContourBackground';
 import RecentActivities from '../../components/RecentActivities';
 import CareerHighlights from '../../components/CareerHighlights';
+import CountdownTimer from '../../components/CountdownTimer';
 
 export default function KobePage({ onOpenMenu }) {
     const [isFullScreen, setIsFullScreen] = useState(false);
@@ -26,6 +27,15 @@ export default function KobePage({ onOpenMenu }) {
                 </div>
             )}
 
+            {/* Center Title - Kobe Bryant */}
+            {!isFullScreen && (
+                <div className="absolute top-0 left-0 w-full h-[120px] flex justify-center items-center pointer-events-none z-[250]">
+                    <h2 className="text-[#ccff00] text-5xl md:text-7xl transform -rotate-2 opacity-90" style={{ fontFamily: '"Brush Script MT", cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>
+                        Kobe Bryant
+                    </h2>
+                </div>
+            )}
+
             {/* Header Buttons (z-50) */}
             {!isFullScreen && (
                 <div className="absolute top-0 left-0 w-full px-12 py-10 flex justify-end items-start z-50 pointer-events-none">
@@ -43,9 +53,10 @@ export default function KobePage({ onOpenMenu }) {
             )}
 
             {/* Main Content */}
-            <div className="relative z-10 w-full flex-grow flex flex-col justify-center pt-24 pb-20">
+            <div className="relative z-10 w-full flex-grow flex flex-col justify-center pt-24 pb-0">
                 <RecentActivities onSelectionChange={setIsFullScreen} />
                 <CareerHighlights />
+                <CountdownTimer />
             </div>
         </div>
     );

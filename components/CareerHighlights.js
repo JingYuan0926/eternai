@@ -35,8 +35,8 @@ const achievements = [
     }
 ];
 
-const Trophy = () => (
-    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#ccff00]">
+const Trophy = ({ className }) => (
+    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
         <path d="M8 21H16M12 17V21M17 4H7C5.89543 4 5 4.89543 5 6V8C5 9.10457 5.89543 10 7 10H17C18.1046 10 19 9.10457 19 8V6C19 4.89543 18.1046 4 17 4ZM17 4V2H7V4M7 4H4V8H5M19 8H20V4H17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M12 17C14.7614 17 17 14.7614 17 12V10H7V12C7 14.7614 9.23858 17 12 17Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
@@ -65,9 +65,9 @@ export default function CareerHighlights() {
                 {/* Left Column - Image */}
                 <div className="col-span-5 relative h-full bg-gray-200 rounded-lg overflow-hidden">
                     <img
-                        src="https://cdn.artphotolimited.com/images/59888232b0ba742a2efde168/1000x1000/kobe-bryant-fevrier-2011.jpg"
+                        src="https://media.cnn.com/api/v1/images/stellar/prod/200127110655-kobe-bryant-4-profile-shot.jpg?q=w_3000,h_2010,x_0,y_0,c_fill"
                         alt="Kobe Bryant Career"
-                        className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                        className="w-full h-full object-cover transition-all duration-700"
                     />
                 </div>
 
@@ -80,7 +80,14 @@ export default function CareerHighlights() {
                                 className="flex items-start gap-6 group cursor-default"
                             >
                                 <div className="pt-1 opacity-50 group-hover:opacity-100 transition-opacity duration-300">
-                                    <Trophy />
+                                    <Trophy className={
+                                        index === 0 ||
+                                            item.title.includes('SCORING CHAMP') ||
+                                            item.title.includes('SLAM DUNK') ||
+                                            item.title.includes('OLYMPIC GOLD')
+                                            ? "text-[#ccff00]"
+                                            : "text-gray-300"
+                                    } />
                                 </div>
                                 <div>
                                     <h3 className="text-3xl font-black uppercase tracking-tighter leading-none mb-2 transition-colors duration-300">

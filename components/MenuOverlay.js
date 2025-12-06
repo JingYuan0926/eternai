@@ -29,7 +29,10 @@ export default function MenuOverlay({ isOpen, onClose, showContent = true }) {
     // activeIndex derivation logic
     // We check which menu item matches current route
     const currentPath = router.pathname;
-    const defaultActiveIndex = menuItems.findIndex(item => item.href === currentPath);
+    const defaultActiveIndex = menuItems.findIndex(item => {
+        if (item.href === '/') return currentPath === '/';
+        return currentPath.startsWith(item.href) && item.href !== '/';
+    });
 
     // Determine which index is currently "active" for image highlighting
     // Priority: Hovered item > Default active item. If no match (e.g. 404), default to none (-1) or Home (0).
@@ -136,7 +139,7 @@ export default function MenuOverlay({ isOpen, onClose, showContent = true }) {
             <div className="w-full h-1/2 md:w-1/2 md:h-full flex flex-col justify-center items-center relative z-10 text-[#e0e0e0]">
                 <nav className="flex flex-col items-center gap-6 mb-0 md:mb-20">
                     {menuItems.map((item, index) => {
-                        const isActive = item.href === currentPath;
+                        const isActive = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href) && item.href !== '/';
                         return (
                             <div
                                 key={item.label}
