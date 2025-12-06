@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ContourBackground from '../../components/ContourBackground';
 import RecentActivities from '../../components/RecentActivities';
+import CareerHighlights from '../../components/CareerHighlights';
 
 export default function KobePage({ onOpenMenu }) {
     const [isFullScreen, setIsFullScreen] = useState(false);
@@ -44,6 +45,7 @@ export default function KobePage({ onOpenMenu }) {
             {/* Main Content */}
             <div className="relative z-10 w-full flex-grow flex flex-col justify-center pt-24 pb-20">
                 <RecentActivities onSelectionChange={setIsFullScreen} />
+                <CareerHighlights />
             </div>
         </div>
     );
