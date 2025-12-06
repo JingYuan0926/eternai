@@ -50,7 +50,13 @@ const activitiesData = [
 
 export default function RecentActivities() {
     const [hoveredId, setHoveredId] = useState(null);
+    const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const videoRefs = useRef({});
+    const previewVideoRef = useRef(null);
+
+    const handleMouseMove = (e) => {
+        setCursorPos({ x: e.clientX, y: e.clientY });
+    };
 
     const handleMouseEnter = (id) => {
         setHoveredId(id);
@@ -69,8 +75,45 @@ export default function RecentActivities() {
         }
     };
 
+    const hoveredItem = activitiesData.find(item => item.id === hoveredId);
+
     return (
-        <div className="w-full max-w-[1400px] mx-auto px-6 pt-12 pb-20 font-sans text-black relative z-20">
+        <div
+            className="w-full max-w-[1400px] mx-auto px-6 pt-12 pb-20 font-sans text-black relative z-20"
+            onMouseMove={handleMouseMove}
+        >
+            {/* Floating Preview */}
+            <div
+                className="fixed pointer-events-none z-50 overflow-hidden rounded-lg shadow-2xl transition-opacity duration-300"
+                style={{
+                    left: cursorPos.x,
+                    top: cursorPos.y,
+                    width: '300px',
+                    height: '200px',
+                    transform: 'translate(20px, 20px)', // Offset from cursor
+                    opacity: hoveredId ? 1 : 0
+                }}
+            >
+                {hoveredItem && (
+                    hoveredItem.mediaType === 'video' ? (
+                        <video
+                            key={hoveredItem.id} // Force re-render/reset on change
+                            src={hoveredItem.src}
+                            className="w-full h-full object-cover"
+                            autoPlay
+                            loop
+                            playsInline
+                        />
+                    ) : (
+                        <img
+                            src={hoveredItem.src}
+                            className="w-full h-full object-cover"
+                            alt=""
+                        />
+                    )
+                )}
+            </div>
+
             {/* Header */}
             <div className="flex justify-between items-end mb-16 border-b border-black/20 pb-6">
                 <div>
