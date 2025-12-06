@@ -10,6 +10,7 @@ export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
     const [currentVideo, setCurrentVideo] = useState('/Q1.mp4');
     const [hasStarted, setHasStarted] = useState(false);
     const [showInvitation, setShowInvitation] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const videoRefs = useRef({});
     const videos = ['/Q1.mp4', '/Q2.mp4', '/Q3.mp4', '/Q4.mp4'];
 
@@ -28,11 +29,15 @@ export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
     const handleInvitationResponse = (response) => {
         setShowInvitation(false);
         if (response === 'yes') {
-            setCurrentVideo('/Q4.mp4');
-            if (videoRefs.current['/Q4.mp4']) {
-                videoRefs.current['/Q4.mp4'].currentTime = 0;
-                videoRefs.current['/Q4.mp4'].play().catch(e => console.log("Play failed", e));
-            }
+            setIsLoading(true);
+            setTimeout(() => {
+                setIsLoading(false);
+                setCurrentVideo('/Q4.mp4');
+                if (videoRefs.current['/Q4.mp4']) {
+                    videoRefs.current['/Q4.mp4'].currentTime = 0;
+                    videoRefs.current['/Q4.mp4'].play().catch(e => console.log("Play failed", e));
+                }
+            }, 1000);
         }
     };
 
@@ -113,26 +118,48 @@ export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
 
             {/* Invitation Popup */}
             {showInvitation && (
-                <div className="fixed inset-0 z-[400] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-                    <div className="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl shadow-2xl max-w-md text-center transform transition-all scale-100">
-                        <h3 className="text-2xl font-bold text-white mb-6 drop-shadow-md">
-                            Do you want to go to the beach together?
-                        </h3>
-                        <div className="flex gap-4 justify-center">
-                            <button
-                                onClick={() => handleInvitationResponse('yes')}
-                                className="px-8 py-3 bg-[#ccff00] text-black font-bold rounded-full hover:bg-[#b3e600] transition-colors shadow-lg"
-                            >
-                                Yes
-                            </button>
-                            <button
-                                onClick={() => handleInvitationResponse('no')}
-                                className="px-8 py-3 bg-white/20 text-white font-bold rounded-full hover:bg-white/30 transition-colors shadow-lg backdrop-blur-sm"
-                            >
-                                No
-                            </button>
+                <div className="fixed inset-0 z-[400] flex items-center justify-center p-4">
+                    {/* Backdrop with Blur */}
+                    <div className="absolute inset-0 bg-black/20 backdrop-blur-xl transition-all duration-500"></div>
+
+                    {/* Glass Card */}
+                    <div className="relative w-full max-w-lg bg-white/70 backdrop-blur-2xl rounded-3xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] border border-white/50 overflow-hidden flex flex-col transform transition-all scale-100">
+                        <div className="px-10 py-8 border-b border-white/30 bg-white/20 text-center">
+                            <h3 className="text-3xl font-serif text-[#2a2a2a] font-medium tracking-wide">
+                                Invitation
+                            </h3>
+                        </div>
+
+                        <div className="p-10 text-center">
+                            <p className="text-[#444] text-lg font-sans leading-relaxed mb-8">
+                                Do you want to go to the beach together?
+                            </p>
+
+                            <div className="flex gap-4 justify-center">
+                                <button
+                                    onClick={() => handleInvitationResponse('no')}
+                                    className="bg-[#2a2a2a] text-white px-8 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+                                >
+                                    No
+                                </button>
+                                <button
+                                    onClick={() => handleInvitationResponse('yes')}
+                                    className="bg-[#2a2a2a] text-white px-8 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+                                >
+                                    Yes
+                                </button>
+                            </div>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {/* Loading Overlay */}
+            {isLoading && (
+                <div className="fixed inset-0 z-[500] flex items-center justify-center bg-black/80 backdrop-blur-md transition-opacity duration-500">
+                    <h2 className="text-4xl font-bold text-white tracking-widest uppercase animate-pulse">
+                        Going to the beach...
+                    </h2>
                 </div>
             )}
 
