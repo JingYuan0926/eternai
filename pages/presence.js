@@ -27,10 +27,10 @@ export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
     };
 
     const handleInvitationResponse = (response) => {
-        setShowInvitation(false);
         if (response === 'yes') {
             setIsLoading(true);
             setTimeout(() => {
+                setShowInvitation(false);
                 setIsLoading(false);
                 setCurrentVideo('/Q4.mp4');
                 if (videoRefs.current['/Q4.mp4']) {
@@ -38,6 +38,8 @@ export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
                     videoRefs.current['/Q4.mp4'].play().catch(e => console.log("Play failed", e));
                 }
             }, 1000);
+        } else {
+            setShowInvitation(false);
         }
     };
 
@@ -131,35 +133,34 @@ export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
                         </div>
 
                         <div className="p-10 text-center">
-                            <p className="text-[#444] text-lg font-sans leading-relaxed mb-8">
-                                Do you want to go to the beach together?
-                            </p>
+                            {isLoading ? (
+                                <h3 className="text-2xl font-serif text-[#2a2a2a] font-medium tracking-wide animate-pulse">
+                                    Going now...
+                                </h3>
+                            ) : (
+                                <>
+                                    <p className="text-[#444] text-lg font-sans leading-relaxed mb-8">
+                                        Do you want to go to the beach together?
+                                    </p>
 
-                            <div className="flex gap-4 justify-center">
-                                <button
-                                    onClick={() => handleInvitationResponse('no')}
-                                    className="bg-[#2a2a2a] text-white px-8 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
-                                >
-                                    No
-                                </button>
-                                <button
-                                    onClick={() => handleInvitationResponse('yes')}
-                                    className="bg-[#2a2a2a] text-white px-8 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
-                                >
-                                    Yes
-                                </button>
-                            </div>
+                                    <div className="flex gap-4 justify-center">
+                                        <button
+                                            onClick={() => handleInvitationResponse('no')}
+                                            className="bg-[#2a2a2a] text-white px-8 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+                                        >
+                                            No
+                                        </button>
+                                        <button
+                                            onClick={() => handleInvitationResponse('yes')}
+                                            className="bg-[#2a2a2a] text-white px-8 py-3 rounded-xl font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+                                        >
+                                            Yes
+                                        </button>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
-                </div>
-            )}
-
-            {/* Loading Overlay */}
-            {isLoading && (
-                <div className="fixed inset-0 z-[500] flex items-center justify-center bg-black/80 backdrop-blur-md transition-opacity duration-500">
-                    <h2 className="text-4xl font-bold text-white tracking-widest uppercase animate-pulse">
-                        Going to the beach...
-                    </h2>
                 </div>
             )}
 
