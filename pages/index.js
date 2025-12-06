@@ -1,78 +1,84 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import React, { useState } from 'react';
+import Link from 'next/link';
+import MenuOverlay from '../components/MenuOverlay';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+export default function HumanPage() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+    return (
+        <div className="flex justify-center items-end min-h-screen bg-white relative overflow-hidden">
+            {/* Background Video */}
+            <div className="absolute inset-0 z-0">
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover object-bottom"
+                >
+                    <source src="/landing.mp4" type="video/mp4" />
+                </video>
+            </div>
 
-export default function Home() {
-  return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black`}
-    >
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the index.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+            <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+
+            {/* Logo - Fixed on top (z-300) */}
+            <div className="absolute top-0 left-0 w-full px-12 py-10 pointer-events-none z-[300]">
+                <div className="pointer-events-auto inline-block">
+                    <h1
+                        className={`font-sans text-[2.5rem] font-black tracking-[-0.08em] leading-[0.85] m-0 uppercase transition-colors duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${isMenuOpen ? 'text-[#e0e0e0]' : 'text-black'
+                            }`}
+                    >
+                        ETERNAI<br />
+                    </h1>
+                </div>
+            </div>
+
+            {/* Header Buttons (z-50) */}
+            <div className="absolute top-0 left-0 w-full px-12 py-10 flex justify-end items-start z-50 pointer-events-none">
+                {/* Top Right Buttons */}
+                <div className="pointer-events-auto flex gap-4 items-center">
+                    <Link href="/upload">
+                        <button className="bg-transparent border-[1.5px] border-black px-6 h-12 flex justify-center items-center cursor-pointer rounded-md hover:bg-black/10 transition-colors font-sans font-medium text-sm tracking-wider text-black">
+                            ENTER APP
+                        </button>
+                    </Link>
+                    <button
+                        onClick={() => setIsMenuOpen(true)}
+                        className="bg-transparent border-[1.5px] border-black w-12 h-12 flex flex-col justify-center items-center gap-[5px] cursor-pointer rounded-md hover:bg-black/10 transition-colors"
+                    >
+                        <div className="w-[1.2rem] h-[2px] bg-black"></div>
+                        <div className="w-[1.2rem] h-[2px] bg-black"></div>
+                    </button>
+                </div>
+            </div>
+            {/* Main Content Container */}
+            <div className="absolute inset-0 px-12 py-10 pointer-events-none z-10 flex flex-col">
+                {/* Middle Section - Tagline & Headline */}
+                <div className="flex flex-col justify-center pointer-events-auto mt-30">
+                    <div className="mb-6">
+                        <p className="font-sans text-sm font-medium tracking-[0.2em] uppercase text-black/60 mb-2">
+                            The Echo of a Life
+                        </p>
+                        <div className="w-8 h-[2px] bg-black/60"></div>
+                    </div>
+                    <h2 className="font-sans text-[4rem] md:text-[6rem] font-medium leading-[0.9] tracking-tight text-black max-w-5xl">
+                        Love knows no<br />ending
+                    </h2>
+                </div>
+
+                {/* Bottom Section - Description & Line */}
+                <div className="pointer-events-auto relative mt-auto">
+                    <p className="font-sans text-lg md:text-xl leading-relaxed text-black/80 max-w-xl mb-3">
+                        Transform memories into a living dialogue. Keep their wisdom, humor, and voice alive in a secure digital sanctuary.
+                    </p>
+
+                    {/* Bottom Decorative Line */}
+                    <div className="w-full h-[1px] bg-black/50 relative mb-6">
+                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-black rounded-full"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs/pages/getting-started?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+    );
 }
