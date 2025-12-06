@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
  * @param {Function} props.onClose - Callback function to close the menu.
  * @param {string} [props.defaultActiveItem='HOME'] - The label of the menu item to be active by default.
  */
-export default function MenuOverlay({ isOpen, onClose }) {
+export default function MenuOverlay({ isOpen, onClose, showContent = true }) {
     const router = useRouter();
     const menuItems = [
         { label: 'HOME', href: '/' },
@@ -69,7 +69,7 @@ export default function MenuOverlay({ isOpen, onClose }) {
             {/* Close Button (Top Right) */}
             <button
                 onClick={onClose}
-                className={`absolute top-6 right-6 md:top-10 md:right-12 w-12 h-12 bg-[#ccff00] flex justify-center items-center cursor-pointer rounded-md z-50 hover:scale-105 transition-all duration-500 delay-200 ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+                className={`absolute top-6 right-6 md:top-10 md:right-12 w-12 h-12 bg-[#ccff00] flex justify-center items-center cursor-pointer rounded-md z-50 hover:scale-105 transition-all duration-500 delay-200 ${isOpen && showContent ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
                     }`}
             >
                 <div className="relative w-6 h-6">
@@ -79,7 +79,7 @@ export default function MenuOverlay({ isOpen, onClose }) {
             </button>
 
             {/* Left Side - Image Grid */}
-            <div className={`w-full h-1/2 md:w-1/2 md:h-full p-4 md:p-8 flex gap-4 md:gap-12 relative z-10 transition-all duration-1000 delay-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
+            <div className={`w-full h-1/2 md:w-1/2 md:h-full p-4 md:p-8 flex gap-4 md:gap-12 relative z-10 transition-all duration-1000 delay-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${isOpen && showContent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
                 }`}>
                 {/* Column 1 (Left) - Moves UP when mouse moves DOWN */}
                 <div
@@ -143,7 +143,7 @@ export default function MenuOverlay({ isOpen, onClose }) {
                                 onMouseEnter={() => setHoveredIndex(index)}
                                 onMouseLeave={() => setHoveredIndex(null)}
                                 onClick={(e) => handleNavigation(e, item.href)}
-                                className={`font-sans text-[3rem] md:text-[5rem] font-black tracking-tighter leading-[0.9] transition-all duration-1000 ease-[cubic-bezier(0.76,0,0.24,1)] uppercase relative group text-center cursor-pointer ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
+                                className={`font-sans text-[3rem] md:text-[5rem] font-black tracking-tighter leading-[0.9] transition-all duration-1000 ease-[cubic-bezier(0.76,0,0.24,1)] uppercase relative group text-center cursor-pointer ${isOpen && showContent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
                                     } ${isActive
                                         ? 'text-[#4a5a4a] pointer-events-none'
                                         : 'text-[#e0e0e0]'
