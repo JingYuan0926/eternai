@@ -24,10 +24,10 @@ export default function UploadModal({ isOpen, onClose, onComplete, mode = 'wizar
         chatHistory: null,
         photos: [],
         voiceSamples: [],
-        personalityNotes: 'This guy is very funny and a bit downbad (you can extend long ) as this is just an example',
-        twitter: '@johndoe',
-        instagram: '@handsomejohn',
-        facebook: 'John Doe',
+        personalityNotes: "Derek is the kind of guy who lights up a room just by walking in, but not in a loud, seeking-attention way—more like a warm, steady presence that makes everyone feel at ease. He has an infectious laugh that starts as a low chuckle and builds into this genuine, full-body event that makes you want to laugh along even if you missed the joke. He's incredibly observant, the type of friend who notices when you're slightly off and sends a 'thinking of you' meme without being asked. He's deeply passionate about his hobbies, which he talks about with a sparkle in his eyes, whether it's obscure 80s sci-fi movies or the perfect technique for brewing coffee. There's a bit of a romantic in him too, always wearing his heart on his sleeve, sometimes to a fault—he loves deeply and genuinely. He can be a bit 'down bad' sometimes, getting overly invested in crushes or ideas, but it's always from a place of genuine hope and optimism. He's loyal to a fault, the first one to volunteer help when you're moving or just need to vent at 2 AM. His advice isn't always perfect, but it's always given with the absolute best intentions. He remembers the small details, like your favorite candy or that random story you told him three years ago. In short, Derek is the person you want in your corner: funny, caring, slightly goofy, and genuinely one of the good ones.",
+        twitter: '@derek',
+        instagram: '@derek',
+        facebook: 'Derek',
     });
 
     // Reset step when opening in wizard mode
@@ -406,11 +406,11 @@ function StepReview({ formData }) {
             <div className="bg-white/40 rounded-xl p-6 max-w-lg mx-auto text-left border border-white/50 space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-black/5">
                     <span className="text-[#888]">Identity & Memories</span>
-                    <span className="text-[#333] font-medium">5 memories</span>
+                    <span className="text-[#333] font-medium">5 Memories</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-black/5">
                     <span className="text-[#888]">Voice Model</span>
-                    <span className="text-[#333] font-medium">2 voice</span>
+                    <span className="text-[#333] font-medium">1 Voice</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-black/5">
                     <span className="text-[#888]">Personality</span>
