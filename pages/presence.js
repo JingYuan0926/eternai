@@ -9,11 +9,31 @@ export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
     const [isRecording, setIsRecording] = useState(false);
     const [currentVideo, setCurrentVideo] = useState('/Q1.mp4');
     const [hasStarted, setHasStarted] = useState(false);
+    const [showInvitation, setShowInvitation] = useState(false);
     const videoRefs = useRef({});
-    const videos = ['/Q1.mp4', '/Q2.mp4', '/Q3.mp4'];
+    const videos = ['/Q1.mp4', '/Q2.mp4', '/Q3.mp4', '/Q4.mp4'];
 
     const handleVoiceClick = () => {
         setIsRecording(!isRecording);
+    };
+
+    const handleVideoEnd = (src) => {
+        if (src === '/Q3.mp4') {
+            setTimeout(() => {
+                setShowInvitation(true);
+            }, 2000);
+        }
+    };
+
+    const handleInvitationResponse = (response) => {
+        setShowInvitation(false);
+        if (response === 'yes') {
+            setCurrentVideo('/Q4.mp4');
+            if (videoRefs.current['/Q4.mp4']) {
+                videoRefs.current['/Q4.mp4'].currentTime = 0;
+                videoRefs.current['/Q4.mp4'].play().catch(e => console.log("Play failed", e));
+            }
+        }
     };
 
     useEffect(() => {
@@ -71,6 +91,7 @@ export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
                         ref={el => videoRefs.current[src] = el}
                         className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-0 ${currentVideo === src ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
                         playsInline
+                        onEnded={() => handleVideoEnd(src)}
                     >
                         <source src={src} type="video/mp4" />
                     </video>
@@ -90,12 +111,28 @@ export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
                 </div>
             )}
 
-            {/* Center Title - Presence (Real Data) */}
-            {!isFullScreen && (
-                <div className="absolute top-0 left-0 w-full h-[120px] flex justify-center items-center pointer-events-none z-[250]">
-                    <h2 className="text-[#ccff00] text-5xl md:text-7xl transform -rotate-2 opacity-90" style={{ fontFamily: '"Brush Script MT", cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>
-                        Presence
-                    </h2>
+            {/* Invitation Popup */}
+            {showInvitation && (
+                <div className="fixed inset-0 z-[400] flex items-center justify-center bg-black/40 backdrop-blur-sm">
+                    <div className="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl shadow-2xl max-w-md text-center transform transition-all scale-100">
+                        <h3 className="text-2xl font-bold text-white mb-6 drop-shadow-md">
+                            Do you want to go to the beach together?
+                        </h3>
+                        <div className="flex gap-4 justify-center">
+                            <button
+                                onClick={() => handleInvitationResponse('yes')}
+                                className="px-8 py-3 bg-[#ccff00] text-black font-bold rounded-full hover:bg-[#b3e600] transition-colors shadow-lg"
+                            >
+                                Yes
+                            </button>
+                            <button
+                                onClick={() => handleInvitationResponse('no')}
+                                className="px-8 py-3 bg-white/20 text-white font-bold rounded-full hover:bg-white/30 transition-colors shadow-lg backdrop-blur-sm"
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
 
