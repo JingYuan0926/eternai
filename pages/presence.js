@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ContourBackground from '../components/ContourBackground';
 
 
@@ -7,16 +7,74 @@ export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [isRecording, setIsRecording] = useState(false);
+    const [currentVideo, setCurrentVideo] = useState('/Q1.mp4');
+    const [hasStarted, setHasStarted] = useState(false);
+    const videoRefs = useRef({});
+    const videos = ['/Q1.mp4', '/Q2.mp4', '/Q3.mp4'];
 
     const handleVoiceClick = () => {
         setIsRecording(!isRecording);
     };
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (['1', '2', '3'].includes(e.key)) {
+                setHasStarted(true);
+
+                let nextVideo = '';
+                if (e.key === '1') nextVideo = '/Q1.mp4';
+                if (e.key === '2') nextVideo = '/Q2.mp4';
+                if (e.key === '3') nextVideo = '/Q3.mp4';
+
+                if (nextVideo) {
+                    setCurrentVideo(nextVideo);
+                    // Play the new video immediately
+                    if (videoRefs.current[nextVideo]) {
+                        videoRefs.current[nextVideo].currentTime = 0;
+                        videoRefs.current[nextVideo].play().catch(e => console.log("Play failed", e));
+                    }
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
+    useEffect(() => {
+        // Pause other videos when current changes
+        videos.forEach(src => {
+            if (src !== currentVideo && videoRefs.current[src]) {
+                videoRefs.current[src].pause();
+                videoRefs.current[src].currentTime = 0;
+            }
+        });
+
+        // Ensure current video plays if started
+        if (hasStarted && videoRefs.current[currentVideo]) {
+            videoRefs.current[currentVideo].play().catch(e => console.log("Play failed", e));
+        }
+    }, [currentVideo, hasStarted]);
+
     return (
-        <div className="flex flex-col min-h-screen bg-white relative overflow-hidden font-sans">
+        <div className="flex flex-col min-h-screen bg-black relative overflow-hidden font-sans">
             {/* Background Contour Lines - lighter opacity for this design */}
             <div className="fixed inset-0 z-0 pointer-events-none opacity-50">
                 <ContourBackground density={2.2} />
+            </div>
+
+            {/* Background Videos */}
+            <div className="fixed inset-0 z-[1] pointer-events-none bg-black">
+                {videos.map((src) => (
+                    <video
+                        key={src}
+                        ref={el => videoRefs.current[src] = el}
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-0 ${currentVideo === src ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                        playsInline
+                    >
+                        <source src={src} type="video/mp4" />
+                    </video>
+                ))}
             </div>
 
             {/* Logo - Fixed on top (z-300) */}
