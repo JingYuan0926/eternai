@@ -101,7 +101,7 @@ export default function KobePage({ onOpenMenu }) {
     }, [isMuted, hoveredCardId]);
 
     return (
-        <div className="flex flex-col min-h-screen bg-[#FDFBF7] relative overflow-hidden font-sans">
+        <div className="flex flex-col min-h-screen bg-white relative overflow-hidden font-sans">
             {/* Background Contour Lines - lighter opacity for this design */}
             <div className="fixed inset-0 z-0 pointer-events-none opacity-50">
                 <ContourBackground density={2.2} />
