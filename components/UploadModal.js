@@ -25,6 +25,9 @@ export default function UploadModal({ isOpen, onClose, onComplete, mode = 'wizar
         photos: [],
         voiceSamples: [],
         personalityNotes: '',
+        twitter: '',
+        instagram: '',
+        facebook: '',
     });
 
     // Reset step when opening in wizard mode
@@ -338,8 +341,36 @@ function StepVoice({ formData, setFormData }) {
  * Provides a text area for describing personality traits and core memories.
  */
 function StepPersonality({ formData, setFormData }) {
+    const handleChange = (field, value) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
+    };
+
     return (
         <div className="space-y-8 animate-fade-in-up">
+            <div className="space-y-4">
+                <h3 className="text-lg font-medium text-[#444] uppercase tracking-wide border-b border-black/5 pb-2">Social Media (Optional)</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <InputGroup
+                        label="Twitter (X)"
+                        placeholder="@username"
+                        value={formData.twitter}
+                        onChange={(e) => handleChange('twitter', e.target.value)}
+                    />
+                    <InputGroup
+                        label="Instagram"
+                        placeholder="@username"
+                        value={formData.instagram}
+                        onChange={(e) => handleChange('instagram', e.target.value)}
+                    />
+                    <InputGroup
+                        label="Facebook"
+                        placeholder="Profile URL or Name"
+                        value={formData.facebook}
+                        onChange={(e) => handleChange('facebook', e.target.value)}
+                    />
+                </div>
+            </div>
+
             <div className="space-y-3">
                 <label className="block text-sm font-medium text-[#555] uppercase tracking-wide">
                     Personality Notes & Core Memories
@@ -381,9 +412,15 @@ function StepReview({ formData }) {
                     <span className="text-[#888]">Voice Model</span>
                     <span className="text-[#333] font-medium">{formData.voiceSamples.length > 0 ? `${formData.voiceSamples.length} samples` : 'Pending'}</span>
                 </div>
-                <div className="flex justify-between items-center py-2">
+                <div className="flex justify-between items-center py-2 border-b border-black/5">
                     <span className="text-[#888]">Personality</span>
                     <span className="text-[#333] font-medium">{formData.personalityNotes ? 'Added' : 'Pending'}</span>
+                </div>
+                <div className="flex justify-between items-center py-2">
+                    <span className="text-[#888]">Social Media</span>
+                    <span className="text-[#333] font-medium">
+                        {(formData.twitter || formData.instagram || formData.facebook) ? 'Linked' : 'None'}
+                    </span>
                 </div>
             </div>
         </div>

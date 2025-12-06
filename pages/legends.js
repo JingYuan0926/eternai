@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import ContourBackground from '../components/ContourBackground';
+import { useRouter } from 'next/router';
 
 // Mock Data for Legends
 const legendsData = [
@@ -15,13 +16,19 @@ const legendsData = [
 ];
 
 // Custom Card Component with Notched Border
-const LegendCard = ({ legend }) => {
+const LegendCard = ({ legend, onTriggerTransition }) => {
     // Unique IDs for SVG elements
     const pathId = `border-path-${legend.id}`;
     const clipId = `card-clip-${legend.id}`;
 
+    const handleClick = () => {
+        if (legend.name === "KOBE BRYANT") {
+            onTriggerTransition('/legends/kobe');
+        }
+    };
+
     return (
-        <div className="relative w-full aspect-square group cursor-pointer">
+        <div onClick={handleClick} className="relative w-full aspect-square group cursor-pointer">
             {/* SVG Container */}
             <svg
                 width="100%"
@@ -119,7 +126,7 @@ const LegendCard = ({ legend }) => {
     );
 };
 
-export default function LegendsPage({ onOpenMenu }) {
+export default function LegendsPage({ onOpenMenu, onTriggerTransition }) {
     return (
         <div className="flex flex-col min-h-screen bg-white relative overflow-hidden">
             {/* Background Contour Lines */}
@@ -128,16 +135,23 @@ export default function LegendsPage({ onOpenMenu }) {
             </div>
 
             {/* Header - Fixed (Logo & Menu) */}
-            <div className="fixed top-0 left-0 w-full px-12 py-10 z-[300] flex justify-between items-start pointer-events-none">
-                {/* Logo */}
-                <div className="pointer-events-auto">
+            {/* Logo - Fixed on top (z-300) */}
+            <div className="fixed top-0 left-0 w-full px-12 py-10 z-[300] pointer-events-none">
+                <div className="pointer-events-auto inline-block">
                     <h1 className="font-sans text-[2.5rem] font-black tracking-[-0.08em] leading-[0.85] m-0 uppercase text-black">
                         ETERNAI<br />
                     </h1>
                 </div>
+            </div>
 
-                {/* Menu Button */}
-                <div className="pointer-events-auto">
+            {/* Right Actions - Fixed (z-50) to allow MenuOverlay to cover them */}
+            <div className="fixed top-0 left-0 w-full px-12 py-10 z-50 flex justify-end items-start pointer-events-none">
+                <div className="pointer-events-auto flex items-center gap-4">
+                    <button
+                        className="bg-[#ccff00] text-black border-none px-7 h-12 flex items-center justify-center text-sm font-extrabold cursor-pointer rounded-md font-sans tracking-wide shadow-[0_2px_10px_rgba(204,255,0,0.3)] hover:shadow-[0_4px_15px_rgba(204,255,0,0.4)] transition-shadow"
+                    >
+                        HONOR
+                    </button>
                     <button
                         onClick={onOpenMenu}
                         className="bg-transparent border-[1.5px] border-black w-12 h-12 flex flex-col justify-center items-center gap-[5px] cursor-pointer rounded-md hover:bg-black/5 transition-colors"
@@ -152,7 +166,7 @@ export default function LegendsPage({ onOpenMenu }) {
             <div className="relative z-10 w-full max-w-[1600px] mx-auto pt-40 px-6 md:px-12 pb-20">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
                     {legendsData.map((legend) => (
-                        <LegendCard key={legend.id} legend={legend} />
+                        <LegendCard key={legend.id} legend={legend} onTriggerTransition={onTriggerTransition} />
                     ))}
                 </div>
             </div>

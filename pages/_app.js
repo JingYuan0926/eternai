@@ -5,12 +5,25 @@ import MenuOverlay from '@/components/MenuOverlay';
 
 export default function App({ Component, pageProps }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const router = useRouter();
+
+  const triggerTransition = (url) => {
+    setIsTransitioning(true);
+    setIsMenuOpen(true);
+    setTimeout(() => {
+      router.push(url);
+    }, 800); // Wait for slide down (approx 700ms - 800ms)
+  };
 
   useEffect(() => {
     const handleRouteChange = () => {
-      // Close menu when route change completes (new page loaded)
+      // Close menu when route change completes
       setIsMenuOpen(false);
+      // Reset transition state after slide up completes
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 800);
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);
@@ -25,11 +38,9 @@ export default function App({ Component, pageProps }) {
       <MenuOverlay
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
-      // We can determine active item from router.pathname directly in MenuOverlay, 
-      // passing it explicitly is also fine but let's let MenuOverlay handle it or derived logic here.
-      // For now, removing defaultActiveItem prop usage in favor of checking router inside MenuOverlay or passing calculated one.
+        showContent={!isTransitioning}
       />
-      <Component {...pageProps} onOpenMenu={() => setIsMenuOpen(true)} />
+      <Component {...pageProps} onOpenMenu={() => setIsMenuOpen(true)} onTriggerTransition={triggerTransition} />
     </>
   );
 }
