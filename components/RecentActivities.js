@@ -21,21 +21,21 @@ const activitiesData = [
     },
     {
         id: 3,
-        category: 'PODCAST',
-        event: 'JOE ROGAN',
+        category: 'LIFESTYLE',
+        event: 'COOKING',
         date: '25 MAY 25',
         result: 'LIVE',
-        mediaType: 'image',
-        src: 'https://media-cldnry.s-nbcnews.com/image/upload/t_fit-760w,f_auto,q_auto:best/newscms/2016_15/1494926/ss-160413-kobe-bryant-mn-13.jpg'
+        mediaType: 'video',
+        src: '/Cook.mp4'
     },
     {
         id: 4,
-        category: 'CHARITY',
-        event: 'MAMBA FOUNDATION',
+        category: 'PEFORMANCE',
+        event: 'SING',
         date: '16 MAR 25',
         result: 'DONE',
-        mediaType: 'image',
-        src: 'https://cdn.artphotolimited.com/images/59888232b0ba742a2efde168/1000x1000/kobe-bryant-fevrier-2011.jpg'
+        mediaType: 'video',
+        src: '/Sing.mp4'
     },
     {
         id: 5,
