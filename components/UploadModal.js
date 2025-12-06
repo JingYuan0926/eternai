@@ -15,6 +15,17 @@ export default function UploadModal({ isOpen, onClose, onComplete, mode = 'wizar
     // mode: 'wizard' | 'memory' | 'voice' | 'personality'
     const [step, setStep] = useState(1);
     const [isVisible, setIsVisible] = useState(false);
+    const [formData, setFormData] = useState({
+        fullName: '',
+        relationship: '',
+        dateOfBirth: '',
+        dateOfPassing: '',
+        profilePhoto: null,
+        chatHistory: null,
+        photos: [],
+        voiceSamples: [],
+        personalityNotes: '',
+    });
 
     // Reset step when opening in wizard mode
     useEffect(() => {
@@ -27,8 +38,10 @@ export default function UploadModal({ isOpen, onClose, onComplete, mode = 'wizar
     useEffect(() => {
         if (isOpen) {
             setIsVisible(true);
-            const timer = setTimeout(() => document.body.style.overflow = 'hidden', 0);
-            return () => clearTimeout(timer);
+            document.body.style.overflow = 'hidden';
+            return () => {
+                document.body.style.overflow = '';
+            };
         } else {
             const timer = setTimeout(() => setIsVisible(false), 500);
             document.body.style.overflow = '';
@@ -59,10 +72,10 @@ export default function UploadModal({ isOpen, onClose, onComplete, mode = 'wizar
             </div>
         );
 
-        if (step === 1) content = <StepMemories />;
-        if (step === 2) content = <StepVoice />;
-        if (step === 3) content = <StepPersonality />;
-        if (step === 4) content = <StepReview />;
+        if (step === 1) content = <StepMemories formData={formData} setFormData={setFormData} />;
+        if (step === 2) content = <StepVoice formData={formData} setFormData={setFormData} />;
+        if (step === 3) content = <StepPersonality formData={formData} setFormData={setFormData} />;
+        if (step === 4) content = <StepReview formData={formData} />;
 
         footer = (
             <div className="px-10 py-6 border-t border-white/30 flex justify-between items-center bg-white/20">
@@ -82,7 +95,7 @@ export default function UploadModal({ isOpen, onClose, onComplete, mode = 'wizar
                 ) : (
                     <button
                         onClick={() => {
-                            if (onComplete) onComplete();
+                            if (onComplete) onComplete(formData);
                             onClose();
                         }}
                         className="bg-[#ccff00] text-black px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-[0_0_20px_rgba(204,255,0,0.4)] hover:-translate-y-0.5 transition-all duration-300"
@@ -99,13 +112,13 @@ export default function UploadModal({ isOpen, onClose, onComplete, mode = 'wizar
 
         if (mode === 'memory') {
             modeTitle = "Manage Memories";
-            modeContent = <StepMemories />;
+            modeContent = <StepMemories formData={formData} setFormData={setFormData} />;
         } else if (mode === 'voice') {
             modeTitle = "Voice Cloning";
-            modeContent = <StepVoice />;
+            modeContent = <StepVoice formData={formData} setFormData={setFormData} />;
         } else if (mode === 'personality') {
             modeTitle = "Personality Core";
-            modeContent = <StepPersonality />;
+            modeContent = <StepPersonality formData={formData} setFormData={setFormData} />;
         }
 
         title = (
@@ -185,38 +198,95 @@ export default function UploadModal({ isOpen, onClose, onComplete, mode = 'wizar
  * Component for the "Memories" step of the wizard.
  * Handles input for identity details, profile photo, chat history, and photo gallery.
  */
-function StepMemories() {
+function StepMemories({ formData, setFormData }) {
+    const handleChange = (field, value) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
+    };
+
+    const handleFileChange = (field, e) => {
+        const file = e.target.files[0];
+        if (file) handleChange(field, file);
+    };
+
+    const handlePhotosChange = (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const newPhotos = Array.from(e.target.files);
+            setFormData(prev => ({ ...prev, photos: [...prev.photos, ...newPhotos] }));
+        }
+    };
+
     return (
         <div className="space-y-8 animate-fade-in-up">
             {/* Integrated Identity Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <InputGroup label="Full Name of Loved One" placeholder="e.g. Eleanor Rigby" />
-                <InputGroup label="Relationship" placeholder="e.g. Grandmother" />
-                <InputGroup label="Date of Birth" type="date" />
-                <InputGroup label="Date of Passing" type="date" />
+                <InputGroup
+                    label="Full Name of Loved One"
+                    placeholder="e.g. Eleanor Rigby"
+                    value={formData.fullName}
+                    onChange={(e) => handleChange('fullName', e.target.value)}
+                />
+                <InputGroup
+                    label="Relationship"
+                    placeholder="e.g. Grandmother"
+                    value={formData.relationship}
+                    onChange={(e) => handleChange('relationship', e.target.value)}
+                />
+                <InputGroup
+                    label="Date of Birth"
+                    type="date"
+                    value={formData.dateOfBirth}
+                    onChange={(e) => handleChange('dateOfBirth', e.target.value)}
+                />
+                <InputGroup
+                    label="Date of Passing"
+                    type="date"
+                    value={formData.dateOfPassing}
+                    onChange={(e) => handleChange('dateOfPassing', e.target.value)}
+                />
             </div>
 
-            <div className="bg-white/40 p-8 rounded-2xl border border-white/50 text-center hover:bg-white/50 transition-colors cursor-pointer group">
-                <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-8 h-8 text-[#999]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <label className="bg-white/40 p-8 rounded-2xl border border-white/50 text-center hover:bg-white/50 transition-colors cursor-pointer group block">
+                <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                    {formData.profilePhoto ? (
+                        <img src={URL.createObjectURL(formData.profilePhoto)} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                        <svg className="w-8 h-8 text-[#999]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    )}
                 </div>
                 <h3 className="text-lg font-medium text-[#444]">Profile Photo</h3>
-                <p className="text-sm text-[#888] mt-1">Drag and drop or click to upload</p>
-            </div>
+                <p className="text-sm text-[#888] mt-1">{formData.profilePhoto ? formData.profilePhoto.name : "Drag and drop or click to upload"}</p>
+                <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileChange('profilePhoto', e)} />
+            </label>
 
             <hr className="border-white/40 my-6" />
 
             {/* Original Memories Fields */}
-            <InputGroup label="Chat History / Letters" type="file" help="Upload PDF, TXT, or JSON exports of conversations." />
+            <InputGroup
+                label="Chat History / Letters"
+                type="file"
+                help="Upload PDF, TXT, or JSON exports of conversations."
+                onChange={(e) => handleFileChange('chatHistory', e)}
+                accept=".pdf,.txt,.json"
+            />
 
             <div className="space-y-4">
                 <h3 className="text-lg font-medium text-[#444]">Photo Gallery</h3>
                 <div className="grid grid-cols-3 gap-4">
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <div key={i} className="aspect-square bg-white/40 rounded-xl border border-white/50 flex items-center justify-center cursor-pointer hover:bg-white/60 transition-colors">
-                            <span className="text-2xl text-[#ccc]">+</span>
+                    {formData.photos.map((photo, i) => (
+                        <div key={i} className="aspect-square bg-white/40 rounded-xl border border-white/50 flex items-center justify-center overflow-hidden relative group">
+                            <img src={URL.createObjectURL(photo)} alt={`Gallery ${i}`} className="w-full h-full object-cover" />
+                            <button
+                                onClick={() => setFormData(prev => ({ ...prev, photos: prev.photos.filter((_, idx) => idx !== i) }))}
+                                className="absolute inset-0 bg-black/50 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity"
+                            >
+                                Remove
+                            </button>
                         </div>
                     ))}
+                    <label className="aspect-square bg-white/40 rounded-xl border border-white/50 flex items-center justify-center cursor-pointer hover:bg-white/60 transition-colors">
+                        <span className="text-2xl text-[#ccc]">+</span>
+                        <input type="file" className="hidden" accept="image/*" multiple onChange={handlePhotosChange} />
+                    </label>
                 </div>
             </div>
         </div>
@@ -227,10 +297,35 @@ function StepMemories() {
  * Component for the "Voice" step of the wizard.
  * Allows users to upload voice samples for cloning.
  */
-function StepVoice() {
+function StepVoice({ formData, setFormData }) {
+    const handleVoiceChange = (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const newFiles = Array.from(e.target.files);
+            setFormData(prev => ({ ...prev, voiceSamples: [...prev.voiceSamples, ...newFiles] }));
+        }
+    };
+
     return (
         <div className="space-y-8 animate-fade-in-up">
-            <InputGroup label="Voice Samples" type="file" multiple help="Upload clear audio clips for voice cloning (MP3, WAV)." />
+            <InputGroup
+                label="Voice Samples"
+                type="file"
+                multiple
+                help="Upload clear audio clips for voice cloning (MP3, WAV)."
+                onChange={handleVoiceChange}
+                accept=".mp3,.wav,.m4a"
+            />
+            {/* List selected files */}
+            {formData.voiceSamples.length > 0 && (
+                <div className="space-y-2">
+                    {formData.voiceSamples.map((file, i) => (
+                        <div key={i} className="text-sm text-[#666] flex justify-between">
+                            <span>{file.name}</span>
+                            <button onClick={() => setFormData(prev => ({ ...prev, voiceSamples: prev.voiceSamples.filter((_, idx) => idx !== i) }))} className="text-red-500">Remove</button>
+                        </div>
+                    ))}
+                </div>
+            )}
             <div className="p-6 bg-white/40 rounded-xl border border-white/50 text-[#666] text-sm leading-relaxed">
                 Tip: High-quality, isolated vocals work best. Avoid background noise.
             </div>
@@ -242,7 +337,7 @@ function StepVoice() {
  * Component for the "Personality" step of the wizard.
  * Provides a text area for describing personality traits and core memories.
  */
-function StepPersonality() {
+function StepPersonality({ formData, setFormData }) {
     return (
         <div className="space-y-8 animate-fade-in-up">
             <div className="space-y-3">
@@ -252,6 +347,8 @@ function StepPersonality() {
                 <textarea
                     className="w-full h-80 bg-white/50 border border-white/50 rounded-xl p-4 focus:ring-2 focus:ring-[#2a2a2a]/20 focus:border-[#2a2a2a]/30 focus:bg-white/80 transition-all outline-none resize-none text-[#333] placeholder-[#999]"
                     placeholder="Describe their personality, mannerisms, favorite phrases, or specific memories you want to preserve..."
+                    value={formData.personalityNotes}
+                    onChange={(e) => setFormData(prev => ({ ...prev, personalityNotes: e.target.value }))}
                 ></textarea>
             </div>
         </div>
@@ -262,7 +359,7 @@ function StepPersonality() {
  * Component for the "Review" step of the wizard.
  * Displays a summary of the collected data before final submission.
  */
-function StepReview() {
+function StepReview({ formData }) {
     return (
         <div className="space-y-8 animate-fade-in-up text-center py-10">
             <div className="w-24 h-24 bg-[#ccff00]/20 rounded-full mx-auto flex items-center justify-center mb-6">
@@ -278,15 +375,15 @@ function StepReview() {
             <div className="bg-white/40 rounded-xl p-6 max-w-lg mx-auto text-left border border-white/50 space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-black/5">
                     <span className="text-[#888]">Identity & Memories</span>
-                    <span className="text-[#333] font-medium">Completed</span>
+                    <span className="text-[#333] font-medium">{formData.fullName ? 'Completed' : 'Pending'}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-black/5">
                     <span className="text-[#888]">Voice Model</span>
-                    <span className="text-[#333] font-medium">Ready</span>
+                    <span className="text-[#333] font-medium">{formData.voiceSamples.length > 0 ? `${formData.voiceSamples.length} samples` : 'Pending'}</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
                     <span className="text-[#888]">Personality</span>
-                    <span className="text-[#333] font-medium">Added</span>
+                    <span className="text-[#333] font-medium">{formData.personalityNotes ? 'Added' : 'Pending'}</span>
                 </div>
             </div>
         </div>
@@ -306,20 +403,29 @@ function StepReview() {
  * @param {string} [props.help] - Helper text displayed below the input.
  * @param {boolean} [props.multiple] - Whether multiple files can be selected (only for type='file').
  */
-function InputGroup({ label, type = "text", placeholder, help, multiple }) {
+function InputGroup({ label, type = "text", placeholder, help, multiple, value, onChange, accept, id }) {
     return (
         <div className="space-y-2">
             <label className="block text-sm font-medium text-[#555] uppercase tracking-wide">
                 {label}
             </label>
             {type === 'file' ? (
-                <div className="bg-white/40 border-2 border-dashed border-white/50 rounded-xl p-6 text-center transition-colors hover:bg-white/50 cursor-pointer">
+                <label className="bg-white/40 border-2 border-dashed border-white/50 rounded-xl p-6 text-center transition-colors hover:bg-white/50 cursor-pointer block">
                     <span className="text-sm text-[#777]">{placeholder || (multiple ? "Choose files to upload" : "Choose a file to upload")}</span>
-                    <input type="file" className="hidden" multiple={multiple} />
-                </div>
+                    <input
+                        type="file"
+                        id={id}
+                        className="hidden"
+                        multiple={multiple}
+                        onChange={onChange}
+                        accept={accept}
+                    />
+                </label>
             ) : (
                 <input
                     type={type}
+                    value={value || ''}
+                    onChange={onChange}
                     className="w-full bg-white/50 border border-white/50 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#2a2a2a]/20 focus:border-[#2a2a2a]/30 focus:bg-white/80 transition-all outline-none text-[#333] placeholder-[#999]"
                     placeholder={placeholder}
                 />

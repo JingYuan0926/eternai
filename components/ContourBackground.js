@@ -207,7 +207,7 @@ export default function ContourBackground({ color = '#d1d1d1', isStatic = false,
                 container.removeChild(renderer.domElement);
             }
         };
-    }, [color, isStatic, density]);
+    }, [color, isStatic, density, thickness, opacity]);
 
     return (
         <div
