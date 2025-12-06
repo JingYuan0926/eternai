@@ -3,9 +3,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ContourBackground from './ContourBackground';
 
+/**
+ * A full-screen overlay menu component with animated transitions and image previews.
+ * Displays navigation links and interactive visual elements.
+ *
+ * @param {Object} props
+ * @param {boolean} props.isOpen - Whether the menu overlay is currently open.
+ * @param {Function} props.onClose - Callback function to close the menu.
+ * @param {string} [props.defaultActiveItem='HOME'] - The label of the menu item to be active by default.
+ */
 export default function MenuOverlay({ isOpen, onClose, defaultActiveItem = 'HOME' }) {
     const menuItems = [
-        { label: 'HOME', href: '/landing' },
+        { label: 'HOME', href: '/' },
         { label: 'REMEMBRANCE', href: '/upload' },
         { label: 'PRESENCE', href: '#' },
         { label: 'SERENITY', href: '#' }

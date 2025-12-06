@@ -124,6 +124,17 @@ void main() {
 }
 `;
 
+/**
+ * A background component that renders animated or static contour lines using Three.js and custom shaders.
+ * Creates a topographic map-like effect with Simplex noise.
+ *
+ * @param {Object} props
+ * @param {string} [props.color='#d1d1d1'] - The color of the contour lines.
+ * @param {boolean} [props.isStatic=false] - If true, the animation is paused.
+ * @param {number} [props.thickness=0.008] - The thickness of the contour lines.
+ * @param {number} [props.opacity=0.4] - The opacity of the contour lines.
+ * @param {number} [props.density=6.0] - The density of the contour lines (frequency of the noise).
+ */
 export default function ContourBackground({ color = '#d1d1d1', isStatic = false, thickness = 0.008, opacity = 0.4, density = 6.0 }) {
     const containerRef = useRef(null);
     const rendererRef = useRef(null);
@@ -196,7 +207,7 @@ export default function ContourBackground({ color = '#d1d1d1', isStatic = false,
                 container.removeChild(renderer.domElement);
             }
         };
-    }, [color, isStatic, density]);
+    }, [color, isStatic, density, thickness, opacity]);
 
     return (
         <div
