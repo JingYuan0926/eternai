@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import MenuOverlay from '../components/MenuOverlay';
+// MenuOverlay is now global in _app.js
 
-export default function HumanPage() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+export default function HumanPage({ onOpenMenu }) {
+    // const [isMenuOpen, setIsMenuOpen] = useState(false); // Managed globally
 
     return (
         <div className="flex justify-center items-end min-h-screen bg-white relative overflow-hidden">
@@ -20,14 +20,13 @@ export default function HumanPage() {
                 </video>
             </div>
 
-            <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+            {/* MenuOverlay is global now */}
 
             {/* Logo - Fixed on top (z-300) */}
             <div className="absolute top-0 left-0 w-full px-12 py-10 pointer-events-none z-[300]">
                 <div className="pointer-events-auto inline-block">
                     <h1
-                        className={`font-sans text-[2.5rem] font-black tracking-[-0.08em] leading-[0.85] m-0 uppercase transition-colors duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${isMenuOpen ? 'text-[#e0e0e0]' : 'text-black'
-                            }`}
+                        className={`font-sans text-[2.5rem] font-black tracking-[-0.08em] leading-[0.85] m-0 uppercase transition-colors duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] text-black`}
                     >
                         ETERNAI<br />
                     </h1>
@@ -44,7 +43,7 @@ export default function HumanPage() {
                         </button>
                     </Link>
                     <button
-                        onClick={() => setIsMenuOpen(true)}
+                        onClick={onOpenMenu}
                         className="bg-transparent border-[1.5px] border-black w-12 h-12 flex flex-col justify-center items-center gap-[5px] cursor-pointer rounded-md hover:bg-black/10 transition-colors"
                     >
                         <div className="w-[1.2rem] h-[2px] bg-black"></div>
