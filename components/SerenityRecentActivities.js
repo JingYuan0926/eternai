@@ -3,57 +3,20 @@ import React, { useState, useRef, useEffect } from 'react';
 const activitiesData = [
     {
         id: 1,
-        category: 'DEBATE',
-        event: 'CHARLIE KIRK',
-        date: '9 NOV 25',
-        result: 'WIN',
+        category: 'TRAVEL',
+        event: 'BEACH',
+        date: '7 DEC 25',
+        result: 'MEMORY',
         mediaType: 'video',
-        src: '/Debate.mp4'
-    },
-    {
-        id: 2,
-        category: 'STREAM',
-        event: 'NBA 2K25',
-        date: '6 JUL 25',
-        result: 'WIN',
-        mediaType: 'video',
-        src: '/KobeGame.mp4'
-    },
-    {
-        id: 3,
-        category: 'LIFESTYLE',
-        event: 'COOKING',
-        date: '25 MAY 25',
-        result: 'LIVE',
-        mediaType: 'video',
-        src: '/Cook.mp4'
-    },
-    {
-        id: 4,
-        category: 'PEFORMANCE',
-        event: 'SING',
-        date: '16 MAR 25',
-        result: 'DONE',
-        mediaType: 'video',
-        src: '/Sing.mp4'
-    },
-    {
-        id: 5,
-        category: 'SPORTS',
-        event: 'GYM',
-        date: '8 DEC 24',
-        result: 'OPEN',
-        mediaType: 'video',
-        src: '/Gym.mp4'
+        src: '/Q4.mp4'
     }
 ];
 
-export default function RecentActivities({ onSelectionChange, backLink, onTriggerTransition }) {
+export default function SerenityRecentActivities({ onSelectionChange, backLink, onTriggerTransition }) {
     const [hoveredId, setHoveredId] = useState(null);
     const [selectedId, setSelectedId] = useState(null);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const videoRefs = useRef({});
-    const previewVideoRef = useRef(null);
 
     useEffect(() => {
         if (onSelectionChange) {
@@ -176,7 +139,7 @@ export default function RecentActivities({ onSelectionChange, backLink, onTrigge
                 </div>
                 <div className="max-w-md text-right">
                     <p className="text-sm font-medium uppercase tracking-wide opacity-60">
-                        Throughout his digital afterlife, Kobe has achieved a range of memorable results across the metaverse.
+                        Throughout his digital afterlife, Derek has been keeping the vibes high and making memorable connections across the virtual space.
                     </p>
                 </div>
             </div>
