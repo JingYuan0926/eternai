@@ -1,5 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+/**
+ * A component that creates a fluid, organic cursor trail effect using SVG filters and turbulence.
+ * It supports both an interactive mouse trail and an automated background animation.
+ *
+ * @param {Object} props
+ * @param {React.ReactNode | Function} props.children - Child components or a render prop receiving hover state.
+ */
 export default function SplashCursor({ children }) {
     const [isHovering, setIsHovering] = useState(false);
 
@@ -164,6 +171,14 @@ export default function SplashCursor({ children }) {
     };
 
     // Helper to create a tapered polygon from points (for automated trail)
+    /**
+     * Generates an SVG path data string for a tapered polygon based on a set of points.
+     * Used to create the fluid trail effect.
+     *
+     * @param {Array<{x: number, y: number}>} points - Array of point coordinates.
+     * @param {number} [maxThickness=100] - The maximum thickness of the trail at the head.
+     * @returns {string} The SVG path data string.
+     */
     const getTaperedPath = (points, maxThickness = 100) => {
         if (points.length < 2) return '';
 
