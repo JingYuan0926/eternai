@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import ContourBackground from '../../components/ContourBackground';
-import RecentActivities from '../../components/RecentActivities';
-import CareerHighlights from '../../components/CareerHighlights';
-import CountdownTimer from '../../components/CountdownTimer';
+import ContourBackground from '../../../components/ContourBackground';
+import SerenityRecentActivities from '../../../components/SerenityRecentActivities';
+import SerenityCareerHighlights from '../../../components/SerenityCareerHighlights';
+import SerenityCountdownTimer from '../../../components/SerenityCountdownTimer';
 
-export default function KobePage({ onOpenMenu }) {
+export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
     const [isFullScreen, setIsFullScreen] = useState(false);
 
     return (
@@ -27,11 +27,11 @@ export default function KobePage({ onOpenMenu }) {
                 </div>
             )}
 
-            {/* Center Title - Kobe Bryant */}
+            {/* Center Title - Presence (Placeholder Data) */}
             {!isFullScreen && (
                 <div className="absolute top-0 left-0 w-full h-[120px] flex justify-center items-center pointer-events-none z-[250]">
                     <h2 className="text-[#ccff00] text-5xl md:text-7xl transform -rotate-2 opacity-90" style={{ fontFamily: '"Brush Script MT", cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>
-                        Kobe Bryant
+                        Presence
                     </h2>
                 </div>
             )}
@@ -41,6 +41,12 @@ export default function KobePage({ onOpenMenu }) {
                 <div className="absolute top-0 left-0 w-full px-12 py-10 flex justify-end items-start z-50 pointer-events-none">
                     {/* Top Right Buttons */}
                     <div className="pointer-events-auto flex gap-4 items-center">
+                        <button
+                            onClick={() => onTriggerTransition('/legends/serenity/kobe')}
+                            className="bg-[#ccff00] text-black border-none px-6 h-12 flex justify-center items-center cursor-pointer rounded-md font-sans font-bold text-sm tracking-wider shadow-[0_2px_10px_rgba(204,255,0,0.3)] hover:shadow-[0_4px_15px_rgba(204,255,0,0.4)] transition-shadow"
+                        >
+                            SERENITY
+                        </button>
                         <button
                             onClick={onOpenMenu}
                             className="bg-transparent border-[1.5px] border-black w-12 h-12 flex flex-col justify-center items-center gap-[5px] cursor-pointer rounded-md hover:bg-black/5 transition-colors"
@@ -54,9 +60,9 @@ export default function KobePage({ onOpenMenu }) {
 
             {/* Main Content */}
             <div className="relative z-10 w-full flex-grow flex flex-col justify-center pt-24 pb-0">
-                <RecentActivities onSelectionChange={setIsFullScreen} />
-                <CareerHighlights />
-                <CountdownTimer />
+                <SerenityRecentActivities onSelectionChange={setIsFullScreen} backLink="/legends" onTriggerTransition={onTriggerTransition} />
+                <SerenityCareerHighlights />
+                <SerenityCountdownTimer />
             </div>
         </div>
     );

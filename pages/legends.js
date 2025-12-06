@@ -23,7 +23,7 @@ const LegendCard = ({ legend, onTriggerTransition }) => {
 
     const handleClick = () => {
         if (legend.name === "KOBE BRYANT") {
-            onTriggerTransition('/legends/kobe');
+            onTriggerTransition('/legends/presence/kobe');
         }
     };
 

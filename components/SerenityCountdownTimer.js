@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function CountdownTimer() {
+export default function SerenityCountdownTimer() {
     const [timeLeft, setTimeLeft] = useState({
         days: 0,
         hours: 12,
@@ -40,7 +40,7 @@ export default function CountdownTimer() {
             <div className="max-w-[1400px] mx-auto text-center relative z-10">
                 {/* Top Label */}
                 <p className="font-sans text-black text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-12">
-                    NEXT ACTIVITIES BEGINS IN...
+                    NEXT DROP IN...
                 </p>
 
                 {/* Main Countdown Container */}
@@ -56,7 +56,7 @@ export default function CountdownTimer() {
                     {/* Overlay "Cooking" Text */}
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full rotate-[-5deg] pointer-events-none z-20">
                         <span className="font-serif italic text-[15vw] md:text-[10rem] text-[#ccff00] leading-none opacity-90 block" style={{ fontFamily: '"Brush Script MT", cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.1), -1px -1px 0 rgba(0,0,0,0.1)' }}>
-                            Cooking
+                            Coming Soon
                         </span>
                     </div>
                 </div>
