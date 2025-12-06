@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import ContourBackground from '../components/ContourBackground';
+import { useRouter } from 'next/router';
 
 // Mock Data for Legends
 const legendsData = [
@@ -16,12 +17,19 @@ const legendsData = [
 
 // Custom Card Component with Notched Border
 const LegendCard = ({ legend }) => {
+    const router = useRouter();
     // Unique IDs for SVG elements
     const pathId = `border-path-${legend.id}`;
     const clipId = `card-clip-${legend.id}`;
 
+    const handleClick = () => {
+        if (legend.name === "KOBE BRYANT") {
+            router.push('/kobe');
+        }
+    };
+
     return (
-        <div className="relative w-full aspect-square group cursor-pointer">
+        <div onClick={handleClick} className="relative w-full aspect-square group cursor-pointer">
             {/* SVG Container */}
             <svg
                 width="100%"
