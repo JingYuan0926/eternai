@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+
 import ContourBackground from './ContourBackground';
+
+import { useRouter } from 'next/router';
 
 /**
  * A full-screen overlay menu component with animated transitions and image previews.
@@ -12,22 +14,36 @@ import ContourBackground from './ContourBackground';
  * @param {Function} props.onClose - Callback function to close the menu.
  * @param {string} [props.defaultActiveItem='HOME'] - The label of the menu item to be active by default.
  */
-export default function MenuOverlay({ isOpen, onClose, defaultActiveItem = 'HOME' }) {
+export default function MenuOverlay({ isOpen, onClose }) {
+    const router = useRouter();
     const menuItems = [
         { label: 'HOME', href: '/' },
         { label: 'REMEMBRANCE', href: '/upload' },
         { label: 'PRESENCE', href: '#' },
-        { label: 'SERENITY', href: '#' }
+        { label: 'SERENITY', href: '#' },
+        { label: 'LEGENDS', href: '/legends' }
     ];
     const [mouseY, setMouseY] = useState(0);
     const [hoveredIndex, setHoveredIndex] = useState(null);
 
-    // Find the index of the default active item
-    const defaultActiveIndex = menuItems.findIndex(item => item.label === defaultActiveItem);
+    // activeIndex derivation logic
+    // We check which menu item matches current route
+    const currentPath = router.pathname;
+    const defaultActiveIndex = menuItems.findIndex(item => item.href === currentPath);
 
     // Determine which index is currently "active" for image highlighting
-    // Priority: Hovered item > Default active item
-    const activeIndex = hoveredIndex !== null ? hoveredIndex : defaultActiveIndex;
+    // Priority: Hovered item > Default active item. If no match (e.g. 404), default to none (-1) or Home (0).
+    // Let's default to -1 if not found, or maybe Home if that's preferred.
+    // The previous code had `defaultActiveItem='HOME'`, which maps to index 0.
+    const effectiveDefaultIndex = defaultActiveIndex !== -1 ? defaultActiveIndex : 0;
+
+    const activeIndex = hoveredIndex !== null ? hoveredIndex : effectiveDefaultIndex;
+
+    const handleNavigation = (e, href) => {
+        e.preventDefault();
+        // Just push to router, _app.js handles closing the menu AFTER route change
+        router.push(href);
+    };
 
     useEffect(() => {
         const handleMouseMove = (e) => {
@@ -120,14 +136,14 @@ export default function MenuOverlay({ isOpen, onClose, defaultActiveItem = 'HOME
             <div className="w-full h-1/2 md:w-1/2 md:h-full flex flex-col justify-center items-center relative z-10 text-[#e0e0e0]">
                 <nav className="flex flex-col items-center gap-6 mb-0 md:mb-20">
                     {menuItems.map((item, index) => {
-                        const isActive = item.label === defaultActiveItem;
+                        const isActive = item.href === currentPath;
                         return (
-                            <Link
+                            <div
                                 key={item.label}
-                                href={item.href}
                                 onMouseEnter={() => setHoveredIndex(index)}
                                 onMouseLeave={() => setHoveredIndex(null)}
-                                className={`font-sans text-[3rem] md:text-[5rem] font-black tracking-tighter leading-[0.9] transition-all duration-1000 ease-[cubic-bezier(0.76,0,0.24,1)] uppercase relative group text-center ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
+                                onClick={(e) => handleNavigation(e, item.href)}
+                                className={`font-sans text-[3rem] md:text-[5rem] font-black tracking-tighter leading-[0.9] transition-all duration-1000 ease-[cubic-bezier(0.76,0,0.24,1)] uppercase relative group text-center cursor-pointer ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
                                     } ${isActive
                                         ? 'text-[#4a5a4a] pointer-events-none'
                                         : 'text-[#e0e0e0]'
@@ -143,7 +159,7 @@ export default function MenuOverlay({ isOpen, onClose, defaultActiveItem = 'HOME
                                         <path d="M0 5 Q 10 0, 20 5 T 40 5 T 60 5 T 80 5 T 100 5" stroke="#ccff00" strokeWidth="2" fill="none" />
                                     </svg>
                                 )}
-                            </Link>
+                            </div>
                         );
                     })}
                 </nav>
