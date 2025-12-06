@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
+/**
+ * Modal component for uploading and managing digital reconstruction data.
+ * Supports 'wizard' mode for a step-by-step process and specific modes for single updates.
+ *
+ * @param {Object} props
+ * @param {boolean} props.isOpen - Whether the modal is currently open.
+ * @param {Function} props.onClose - Callback function to close the modal.
+ * @param {Function} props.onComplete - Callback function triggered when the upload process is completed.
+ * @param {string} [props.mode='wizard'] - The operation mode: 'wizard', 'memory', 'voice', or 'personality'.
+ * @param {boolean} [props.isEditing=false] - Flag to indicate if the modal is in editing mode (affects step count and titles).
+ */
 export default function UploadModal({ isOpen, onClose, onComplete, mode = 'wizard', isEditing = false }) {
     // mode: 'wizard' | 'memory' | 'voice' | 'personality'
     const [step, setStep] = useState(1);
@@ -170,6 +181,10 @@ export default function UploadModal({ isOpen, onClose, onComplete, mode = 'wizar
 
 // --- Steps Components ---
 
+/**
+ * Component for the "Memories" step of the wizard.
+ * Handles input for identity details, profile photo, chat history, and photo gallery.
+ */
 function StepMemories() {
     return (
         <div className="space-y-8 animate-fade-in-up">
@@ -208,6 +223,10 @@ function StepMemories() {
     );
 }
 
+/**
+ * Component for the "Voice" step of the wizard.
+ * Allows users to upload voice samples for cloning.
+ */
 function StepVoice() {
     return (
         <div className="space-y-8 animate-fade-in-up">
@@ -219,6 +238,10 @@ function StepVoice() {
     );
 }
 
+/**
+ * Component for the "Personality" step of the wizard.
+ * Provides a text area for describing personality traits and core memories.
+ */
 function StepPersonality() {
     return (
         <div className="space-y-8 animate-fade-in-up">
@@ -235,6 +258,10 @@ function StepPersonality() {
     );
 }
 
+/**
+ * Component for the "Review" step of the wizard.
+ * Displays a summary of the collected data before final submission.
+ */
 function StepReview() {
     return (
         <div className="space-y-8 animate-fade-in-up text-center py-10">
@@ -268,6 +295,17 @@ function StepReview() {
 
 // --- Helper Components ---
 
+/**
+ * Helper component for rendering form input groups.
+ * Supports text inputs, date pickers, and file uploads with consistent styling.
+ *
+ * @param {Object} props
+ * @param {string} props.label - The label text for the input.
+ * @param {string} [props.type="text"] - The HTML input type (e.g., 'text', 'date', 'file').
+ * @param {string} [props.placeholder] - Placeholder text for the input.
+ * @param {string} [props.help] - Helper text displayed below the input.
+ * @param {boolean} [props.multiple] - Whether multiple files can be selected (only for type='file').
+ */
 function InputGroup({ label, type = "text", placeholder, help, multiple }) {
     return (
         <div className="space-y-2">
