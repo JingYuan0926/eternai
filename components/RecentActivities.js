@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 const activitiesData = [
     {
@@ -48,12 +48,18 @@ const activitiesData = [
     }
 ];
 
-export default function RecentActivities() {
+export default function RecentActivities({ onSelectionChange }) {
     const [hoveredId, setHoveredId] = useState(null);
     const [selectedId, setSelectedId] = useState(null);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const videoRefs = useRef({});
     const previewVideoRef = useRef(null);
+
+    useEffect(() => {
+        if (onSelectionChange) {
+            onSelectionChange(!!selectedId);
+        }
+    }, [selectedId, onSelectionChange]);
 
     const handleMouseMove = (e) => {
         setCursorPos({ x: e.clientX, y: e.clientY });
