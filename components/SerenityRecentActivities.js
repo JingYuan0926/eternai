@@ -3,30 +3,12 @@ import React, { useState, useRef, useEffect } from 'react';
 const activitiesData = [
     {
         id: 1,
-        category: 'CATEGORY 1',
-        event: 'EVENT 1',
-        date: '1 JAN 25',
-        result: 'RESULT',
-        mediaType: 'image',
-        src: 'https://placehold.co/600x400'
-    },
-    {
-        id: 2,
-        category: 'CATEGORY 2',
-        event: 'EVENT 2',
-        date: '2 JAN 25',
-        result: 'RESULT',
-        mediaType: 'image',
-        src: 'https://placehold.co/600x400'
-    },
-    {
-        id: 3,
-        category: 'CATEGORY 3',
-        event: 'EVENT 3',
-        date: '3 JAN 25',
-        result: 'RESULT',
-        mediaType: 'image',
-        src: 'https://placehold.co/600x400'
+        category: 'TRAVEL',
+        event: 'BEACH',
+        date: '7 DEC 25',
+        result: 'MEMORY',
+        mediaType: 'video',
+        src: '/Q4.mp4'
     }
 ];
 
