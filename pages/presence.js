@@ -6,6 +6,11 @@ import ContourBackground from '../components/ContourBackground';
 export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [inputValue, setInputValue] = useState('');
+    const [isRecording, setIsRecording] = useState(false);
+
+    const handleVoiceClick = () => {
+        setIsRecording(!isRecording);
+    };
 
     return (
         <div className="flex flex-col min-h-screen bg-white relative overflow-hidden font-sans">
@@ -59,8 +64,11 @@ export default function PresencePage({ onOpenMenu, onTriggerTransition }) {
                 <div className="fixed bottom-12 left-1/2 transform -translate-x-1/2 w-full max-w-xl px-4 z-50">
                     <div className="relative flex items-center w-full bg-white/10 backdrop-blur-md border border-black/10 rounded-full shadow-lg transition-all focus-within:bg-white/20 focus-within:border-black/30">
                         {/* Voice Message Button */}
-                        <button className="p-4 text-black/60 hover:text-black transition-colors rounded-full focus:outline-none">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <button
+                            onClick={handleVoiceClick}
+                            className={`p-4 transition-all rounded-full focus:outline-none ${isRecording ? 'text-red-500 bg-red-500/10 animate-pulse' : 'text-black/60 hover:text-black'}`}
+                        >
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill={isRecording ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
                                 <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
                                 <line x1="12" y1="19" x2="12" y2="23"></line>
