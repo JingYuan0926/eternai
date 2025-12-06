@@ -50,6 +50,7 @@ const activitiesData = [
 
 export default function RecentActivities() {
     const [hoveredId, setHoveredId] = useState(null);
+    const [selectedId, setSelectedId] = useState(null);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const videoRefs = useRef({});
     const previewVideoRef = useRef(null);
@@ -59,6 +60,7 @@ export default function RecentActivities() {
     };
 
     const handleMouseEnter = (id) => {
+        if (selectedId) return; // Don't change hover state if item is selected
         setHoveredId(id);
         const video = videoRefs.current[id];
         if (video) {
@@ -68,6 +70,7 @@ export default function RecentActivities() {
     };
 
     const handleMouseLeave = (id) => {
+        if (selectedId) return; // Don't change hover state if item is selected
         setHoveredId(null);
         const video = videoRefs.current[id];
         if (video) {
@@ -75,44 +78,79 @@ export default function RecentActivities() {
         }
     };
 
+    const handleClick = (id) => {
+        if (selectedId === id) {
+            setSelectedId(null); // Deselect if already selected
+        } else {
+            setSelectedId(id); // Select new item
+        }
+    };
+
     const hoveredItem = activitiesData.find(item => item.id === hoveredId);
+    const selectedItem = activitiesData.find(item => item.id === selectedId);
 
     return (
         <div
             className="w-full max-w-[1400px] mx-auto px-6 pt-12 pb-20 font-sans text-black relative z-20"
             onMouseMove={handleMouseMove}
         >
-            {/* Floating Preview */}
-            <div
-                className="fixed pointer-events-none z-50 overflow-hidden rounded-lg shadow-2xl transition-opacity duration-300"
-                style={{
-                    left: cursorPos.x,
-                    top: cursorPos.y,
-                    width: '300px',
-                    height: '200px',
-                    transform: 'translate(20px, 20px)', // Offset from cursor
-                    opacity: hoveredId ? 1 : 0
-                }}
-            >
-                {hoveredItem && (
-                    hoveredItem.mediaType === 'video' ? (
+            {/* Full Screen Overlay */}
+            {selectedItem && (
+                <div
+                    className="fixed inset-0 z-[100] bg-black flex justify-center items-center cursor-pointer"
+                    onClick={() => setSelectedId(null)}
+                >
+                    {selectedItem.mediaType === 'video' ? (
                         <video
-                            key={hoveredItem.id} // Force re-render/reset on change
-                            src={hoveredItem.src}
-                            className="w-full h-full object-cover"
+                            src={selectedItem.src}
+                            className="w-full h-full object-contain"
                             autoPlay
-                            loop
+                            controls
                             playsInline
                         />
                     ) : (
                         <img
-                            src={hoveredItem.src}
-                            className="w-full h-full object-cover"
+                            src={selectedItem.src}
+                            className="w-full h-full object-contain"
                             alt=""
                         />
-                    )
-                )}
-            </div>
+                    )}
+                </div>
+            )}
+
+            {/* Floating Preview (Only show if nothing is selected) */}
+            {!selectedId && (
+                <div
+                    className="fixed pointer-events-none z-50 overflow-hidden rounded-lg shadow-2xl transition-opacity duration-300"
+                    style={{
+                        left: cursorPos.x,
+                        top: cursorPos.y,
+                        width: '300px',
+                        height: '200px',
+                        transform: 'translate(20px, 20px)', // Offset from cursor
+                        opacity: hoveredId ? 1 : 0
+                    }}
+                >
+                    {hoveredItem && (
+                        hoveredItem.mediaType === 'video' ? (
+                            <video
+                                key={hoveredItem.id} // Force re-render/reset on change
+                                src={hoveredItem.src}
+                                className="w-full h-full object-cover"
+                                autoPlay
+                                loop
+                                playsInline
+                            />
+                        ) : (
+                            <img
+                                src={hoveredItem.src}
+                                className="w-full h-full object-cover"
+                                alt=""
+                            />
+                        )
+                    )}
+                </div>
+            )}
 
             {/* Header */}
             <div className="flex justify-between items-end mb-16 border-b border-black/20 pb-6">
@@ -142,6 +180,7 @@ export default function RecentActivities() {
                         key={item.id}
                         onMouseEnter={() => handleMouseEnter(item.id)}
                         onMouseLeave={() => handleMouseLeave(item.id)}
+                        onClick={() => handleClick(item.id)}
                         className="group relative grid grid-cols-12 gap-4 items-center py-8 px-4 border-t border-black/10 transition-colors hover:bg-black hover:text-[#ccff00] cursor-pointer"
                     >
                         {/* Background Media (Only visible on hover) */}
