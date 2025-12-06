@@ -38,7 +38,7 @@ export default function HumanPage({ onOpenMenu, onTriggerTransition }) {
                 {/* Top Right Buttons */}
                 <div className="pointer-events-auto flex gap-4 items-center">
                     <button
-                        onClick={() => onTriggerTransition('/upload')}
+                        onClick={() => onTriggerTransition('/rememberance')}
                         className="bg-[#ccff00] text-black border-none px-6 h-12 flex justify-center items-center cursor-pointer rounded-md font-sans font-bold text-sm tracking-wider shadow-[0_2px_10px_rgba(204,255,0,0.3)] hover:shadow-[0_4px_15px_rgba(204,255,0,0.4)] transition-shadow"
                     >
                         ENTER APP

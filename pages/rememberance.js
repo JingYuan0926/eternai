@@ -5,7 +5,7 @@ import ContourBackground from '../components/ContourBackground';
 // MenuOverlay global
 import UploadModal from '../components/UploadModal';
 
-export default function UploadPage({ onOpenMenu }) {
+export default function RemembrancePage({ onOpenMenu }) {
     // const [isMenuOpen, setIsMenuOpen] = useState(false); // Global
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [uploadMode, setUploadMode] = useState('wizard'); // 'wizard', 'memory', 'voice', 'personality'

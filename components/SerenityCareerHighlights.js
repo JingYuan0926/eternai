@@ -2,20 +2,44 @@ import React from 'react';
 
 const achievements = [
     {
-        title: 'ACHIEVEMENT 1',
-        year: '2023'
+        title: 'ACADEMIC EXCELLENCE AND HONOR ROLL CERTIFICATE',
+        year: '2011, 2012, 2013, 2014',
+        color: 'gold'
     },
     {
-        title: 'ACHIEVEMENT 2',
-        year: '2024'
+        title: 'MERIT BASED SCHOLARSHIP',
+        year: '2015',
+        color: 'gold'
     },
     {
-        title: 'ACHIEVEMENT 3',
-        year: '2025'
+        title: 'DEANS LIST AND FACULTY HONORS',
+        year: '2017, 2018',
+        color: 'gold'
     },
     {
-        title: 'ACHIEVEMENT 4',
-        year: '2025'
+        title: 'UNIVERSITY LEADERSHIP AND SERVICE AWARD',
+        year: '2019',
+        color: 'silver'
+    },
+    {
+        title: 'INTERNSHIP COMPLETION CERTIFICATE',
+        year: '2020, 2021',
+        color: 'silver'
+    },
+    {
+        title: 'GRADUATE DISTINCTION WITH HONORS',
+        year: '2022',
+        color: 'silver'
+    },
+    {
+        title: 'OUTSTANDING NEW HIRE AWARD',
+        year: '2023',
+        color: 'silver'
+    },
+    {
+        title: 'MARATHON WINNER',
+        year: '2025',
+        color: 'gold'
     }
 ];
 
@@ -33,13 +57,13 @@ export default function SerenityCareerHighlights() {
             <div className="flex justify-between items-end mb-16 border-b border-black/20 pb-6">
                 <div className="max-w-2xl">
                     <h2 className="text-6xl font-black uppercase tracking-tighter leading-none mb-2">
-                        CAREER HIGHLIGHTS<br />
-                        <span className="italic font-light">2024 — 2025</span>
+                        LIFE ACHIEVEMENT<br />
+                        <span className="italic font-light">2010 — 2025</span>
                     </h2>
                 </div>
                 <div className="max-w-md text-right pt-4">
                     <p className="text-sm font-medium uppercase tracking-wide opacity-60 leading-relaxed">
-                        Placeholder description for Serenity career highlights.
+                        Prior to his digital afterlife, Derek survived university and managed to clock in a full year of work experience as a fresh graduate. He is everyone's best friend at heart.
                     </p>
                 </div>
             </div>
@@ -49,7 +73,7 @@ export default function SerenityCareerHighlights() {
                 {/* Left Column - Image */}
                 <div className="col-span-5 relative h-full bg-gray-200 rounded-lg overflow-hidden">
                     <img
-                        src="https://placehold.co/600x800"
+                        src="/life-achievement.png"
                         alt="Serenity Career"
                         className="w-full h-full object-cover transition-all duration-700"
                     />
@@ -64,7 +88,7 @@ export default function SerenityCareerHighlights() {
                                 className="flex items-start gap-6 group cursor-default"
                             >
                                 <div className="pt-1 opacity-50 group-hover:opacity-100 transition-opacity duration-300">
-                                    <Trophy className="text-[#ccff00]" />
+                                    <Trophy className={item.color === 'gold' ? "text-[#ccff00]" : "text-zinc-400"} />
                                 </div>
                                 <div>
                                     <h3 className="text-3xl font-black uppercase tracking-tighter leading-none mb-2 transition-colors duration-300">

@@ -157,7 +157,7 @@ export default function SerenityRecentActivities({ onSelectionChange, backLink, 
                 </div>
                 <div className="max-w-md text-right">
                     <p className="text-sm font-medium uppercase tracking-wide opacity-60">
-                        Placeholder description for Serenity recent activities.
+                        Throughout his digital afterlife, Derek has been keeping the vibes high and making memorable connections across the virtual space.
                     </p>
                 </div>
             </div>
