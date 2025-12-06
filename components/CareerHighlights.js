@@ -46,11 +46,11 @@ export default function CareerHighlights() {
     return (
         <div className="w-full max-w-[1400px] mx-auto px-6 py-20 font-sans text-black relative z-20">
             {/* Header */}
-            <div className="flex justify-between items-start mb-20">
+            <div className="flex justify-between items-end mb-16 border-b border-black/20 pb-6">
                 <div className="max-w-2xl">
                     <h2 className="text-6xl font-black uppercase tracking-tighter leading-none mb-2">
                         NBA CAREER<br />
-                        <span className="italic font-light">1996—2016</span>
+                        <span className="italic font-light">1996 — 2016</span>
                     </h2>
                 </div>
                 <div className="max-w-md text-right pt-4">
