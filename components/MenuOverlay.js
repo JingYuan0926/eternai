@@ -17,7 +17,8 @@ export default function MenuOverlay({ isOpen, onClose, defaultActiveItem = 'HOME
         { label: 'HOME', href: '/' },
         { label: 'REMEMBRANCE', href: '/upload' },
         { label: 'PRESENCE', href: '#' },
-        { label: 'SERENITY', href: '#' }
+        { label: 'SERENITY', href: '#' },
+        { label: 'LEGACY', href: '#' }
     ];
     const [mouseY, setMouseY] = useState(0);
     const [hoveredIndex, setHoveredIndex] = useState(null);
