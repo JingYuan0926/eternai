@@ -14,7 +14,7 @@ import ContourBackground from './ContourBackground';
  */
 export default function MenuOverlay({ isOpen, onClose, defaultActiveItem = 'HOME' }) {
     const menuItems = [
-        { label: 'HOME', href: '/landing' },
+        { label: 'HOME', href: '/' },
         { label: 'REMEMBRANCE', href: '/upload' },
         { label: 'PRESENCE', href: '#' },
         { label: 'SERENITY', href: '#' }
