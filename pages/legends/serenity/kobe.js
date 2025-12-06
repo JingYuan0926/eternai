@@ -62,7 +62,7 @@ export default function SerenityPage({ onOpenMenu, onTriggerTransition }) {
             <div className="relative z-10 w-full flex-grow flex flex-col justify-center pt-24 pb-0">
                 <RecentActivities onSelectionChange={setIsFullScreen} backLink="/legends" onTriggerTransition={onTriggerTransition} />
                 <CareerHighlights />
-                <CountdownTimer />
+                <CountdownTimer initialDays={1} initialHours={3} initialMinutes={28} initialSeconds={38} />
             </div>
         </div>
     );

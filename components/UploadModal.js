@@ -16,7 +16,7 @@ export default function UploadModal({ isOpen, onClose, onComplete, mode = 'wizar
     const [step, setStep] = useState(1);
     const [isVisible, setIsVisible] = useState(false);
     const [formData, setFormData] = useState({
-        fullName: 'John Doe',
+        fullName: 'Derek',
         relationship: 'Friend',
         dateOfBirth: '2000-06-12',
         dateOfPassing: '2025-09-18',
