@@ -19,8 +19,8 @@ export default function MenuOverlay({ isOpen, onClose, showContent = true }) {
     const menuItems = [
         { label: 'HOME', href: '/' },
         { label: 'REMEMBRANCE', href: '/upload' },
-        { label: 'PRESENCE', href: '#' },
-        { label: 'SERENITY', href: '#' },
+        { label: 'PRESENCE', href: '/presence' },
+        { label: 'SERENITY', href: '/serenity' },
         { label: 'LEGENDS', href: '/legends' }
     ];
     const [mouseY, setMouseY] = useState(0);
