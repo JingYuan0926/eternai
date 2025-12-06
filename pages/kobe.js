@@ -107,26 +107,27 @@ export default function KobePage({ onOpenMenu }) {
                 <ContourBackground density={2.2} />
             </div>
 
-            {/* Header */}
-            <div className="fixed top-0 left-0 w-full px-8 py-6 z-[300] flex justify-between items-center pointer-events-none">
-                {/* Logo */}
-                <div className="pointer-events-auto">
-                    <h1 className="font-serif text-2xl font-bold tracking-tight leading-none text-black">
-                        KOBE<br />BRYANT
+            {/* Logo - Fixed on top (z-300) */}
+            <div className="absolute top-0 left-0 w-full px-12 py-10 pointer-events-none z-[300]">
+                <div className="pointer-events-auto inline-block">
+                    <h1
+                        className={`font-sans text-[2.5rem] font-black tracking-[-0.08em] leading-[0.85] m-0 uppercase transition-colors duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] text-black`}
+                    >
+                        ETERNAI<br />
                     </h1>
                 </div>
+            </div>
 
-                {/* Right Side Actions */}
-                <div className="pointer-events-auto flex items-center gap-4">
-                    <button className="bg-[#ccff00] hover:bg-[#b3e600] text-black font-bold py-2 px-6 rounded-sm text-sm transition-colors uppercase tracking-wider">
-                        Store
-                    </button>
+            {/* Header Buttons (z-50) */}
+            <div className="absolute top-0 left-0 w-full px-12 py-10 flex justify-end items-start z-50 pointer-events-none">
+                {/* Top Right Buttons */}
+                <div className="pointer-events-auto flex gap-4 items-center">
                     <button
                         onClick={onOpenMenu}
-                        className="bg-transparent border border-black w-10 h-10 flex flex-col justify-center items-center gap-[4px] cursor-pointer rounded-md hover:bg-black/5 transition-colors"
+                        className="bg-transparent border-[1.5px] border-black w-12 h-12 flex flex-col justify-center items-center gap-[5px] cursor-pointer rounded-md hover:bg-black/5 transition-colors"
                     >
-                        <div className="w-[1rem] h-[1.5px] bg-black"></div>
-                        <div className="w-[1rem] h-[1.5px] bg-black"></div>
+                        <div className="w-[1.2rem] h-[2px] bg-black"></div>
+                        <div className="w-[1.2rem] h-[2px] bg-black"></div>
                     </button>
                 </div>
             </div>
