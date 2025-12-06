@@ -18,7 +18,7 @@ export default function MenuOverlay({ isOpen, onClose, showContent = true }) {
     const router = useRouter();
     const menuItems = [
         { label: 'HOME', href: '/' },
-        { label: 'REMEMBRANCE', href: '/upload' },
+        { label: 'REMEMBRANCE', href: '/rememberance' },
         { label: 'PRESENCE', href: '/presence' },
         { label: 'SERENITY', href: '/serenity' },
         { label: 'LEGENDS', href: '/legends' }

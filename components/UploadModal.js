@@ -16,18 +16,18 @@ export default function UploadModal({ isOpen, onClose, onComplete, mode = 'wizar
     const [step, setStep] = useState(1);
     const [isVisible, setIsVisible] = useState(false);
     const [formData, setFormData] = useState({
-        fullName: '',
-        relationship: '',
-        dateOfBirth: '',
-        dateOfPassing: '',
+        fullName: 'John Doe',
+        relationship: 'Friend',
+        dateOfBirth: '2000-06-12',
+        dateOfPassing: '2025-09-18',
         profilePhoto: null,
         chatHistory: null,
         photos: [],
         voiceSamples: [],
-        personalityNotes: '',
-        twitter: '',
-        instagram: '',
-        facebook: '',
+        personalityNotes: 'This guy is very funny and a bit downbad (you can extend long ) as this is just an example',
+        twitter: '@johndoe',
+        instagram: '@handsomejohn',
+        facebook: 'John Doe',
     });
 
     // Reset step when opening in wizard mode
@@ -406,21 +406,19 @@ function StepReview({ formData }) {
             <div className="bg-white/40 rounded-xl p-6 max-w-lg mx-auto text-left border border-white/50 space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-black/5">
                     <span className="text-[#888]">Identity & Memories</span>
-                    <span className="text-[#333] font-medium">{formData.fullName ? 'Completed' : 'Pending'}</span>
+                    <span className="text-[#333] font-medium">5 memories</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-black/5">
                     <span className="text-[#888]">Voice Model</span>
-                    <span className="text-[#333] font-medium">{formData.voiceSamples.length > 0 ? `${formData.voiceSamples.length} samples` : 'Pending'}</span>
+                    <span className="text-[#333] font-medium">2 voice</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-black/5">
                     <span className="text-[#888]">Personality</span>
-                    <span className="text-[#333] font-medium">{formData.personalityNotes ? 'Added' : 'Pending'}</span>
+                    <span className="text-[#333] font-medium">Detailed</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
                     <span className="text-[#888]">Social Media</span>
-                    <span className="text-[#333] font-medium">
-                        {(formData.twitter || formData.instagram || formData.facebook) ? 'Linked' : 'None'}
-                    </span>
+                    <span className="text-[#333] font-medium">3</span>
                 </div>
             </div>
         </div>
