@@ -128,16 +128,23 @@ export default function LegendsPage({ onOpenMenu }) {
             </div>
 
             {/* Header - Fixed (Logo & Menu) */}
-            <div className="fixed top-0 left-0 w-full px-12 py-10 z-[300] flex justify-between items-start pointer-events-none">
-                {/* Logo */}
-                <div className="pointer-events-auto">
+            {/* Logo - Fixed on top (z-300) */}
+            <div className="fixed top-0 left-0 w-full px-12 py-10 z-[300] pointer-events-none">
+                <div className="pointer-events-auto inline-block">
                     <h1 className="font-sans text-[2.5rem] font-black tracking-[-0.08em] leading-[0.85] m-0 uppercase text-black">
                         ETERNAI<br />
                     </h1>
                 </div>
+            </div>
 
-                {/* Menu Button */}
-                <div className="pointer-events-auto">
+            {/* Right Actions - Fixed (z-50) to allow MenuOverlay to cover them */}
+            <div className="fixed top-0 left-0 w-full px-12 py-10 z-50 flex justify-end items-start pointer-events-none">
+                <div className="pointer-events-auto flex items-center gap-4">
+                    <button
+                        className="bg-[#ccff00] text-black border-none px-7 h-12 flex items-center justify-center text-sm font-extrabold cursor-pointer rounded-md font-sans tracking-wide shadow-[0_2px_10px_rgba(204,255,0,0.3)] hover:shadow-[0_4px_15px_rgba(204,255,0,0.4)] transition-shadow"
+                    >
+                        HONOR
+                    </button>
                     <button
                         onClick={onOpenMenu}
                         className="bg-transparent border-[1.5px] border-black w-12 h-12 flex flex-col justify-center items-center gap-[5px] cursor-pointer rounded-md hover:bg-black/5 transition-colors"
