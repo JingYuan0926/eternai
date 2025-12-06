@@ -39,12 +39,12 @@ const activitiesData = [
     },
     {
         id: 5,
-        category: 'TRAINING',
-        event: 'MAMBA ACADEMY',
+        category: 'SPORTS',
+        event: 'GYM',
         date: '8 DEC 24',
         result: 'OPEN',
-        mediaType: 'image',
-        src: 'https://cdn.artphotolimited.com/images/59888232b0ba742a2efde168/1000x1000/kobe-bryant-fevrier-2011.jpg'
+        mediaType: 'video',
+        src: '/Gym.mp4'
     }
 ];
 
