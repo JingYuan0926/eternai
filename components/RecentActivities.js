@@ -60,7 +60,6 @@ export default function RecentActivities() {
     };
 
     const handleMouseEnter = (id) => {
-        if (selectedId) return; // Don't change hover state if item is selected
         setHoveredId(id);
         const video = videoRefs.current[id];
         if (video) {
@@ -70,7 +69,6 @@ export default function RecentActivities() {
     };
 
     const handleMouseLeave = (id) => {
-        if (selectedId) return; // Don't change hover state if item is selected
         setHoveredId(null);
         const video = videoRefs.current[id];
         if (video) {
