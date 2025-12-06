@@ -27,11 +27,11 @@ export default function SerenityPage({ onOpenMenu, onTriggerTransition }) {
                 </div>
             )}
 
-            {/* Center Title - Serenity (Placeholder Data) */}
+            {/* Center Title - Presence (Placeholder Data) */}
             {!isFullScreen && (
                 <div className="absolute top-0 left-0 w-full h-[120px] flex justify-center items-center pointer-events-none z-[250]">
                     <h2 className="text-[#ccff00] text-5xl md:text-7xl transform -rotate-2 opacity-90" style={{ fontFamily: '"Brush Script MT", cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>
-                        Serenity
+                        Presence
                     </h2>
                 </div>
             )}
@@ -41,6 +41,12 @@ export default function SerenityPage({ onOpenMenu, onTriggerTransition }) {
                 <div className="absolute top-0 left-0 w-full px-12 py-10 flex justify-end items-start z-50 pointer-events-none">
                     {/* Top Right Buttons */}
                     <div className="pointer-events-auto flex gap-4 items-center">
+                        <button
+                            onClick={() => onTriggerTransition('/legends/serenity/kobe')}
+                            className="bg-[#ccff00] text-black border-none px-6 h-12 flex justify-center items-center cursor-pointer rounded-md font-sans font-bold text-sm tracking-wider shadow-[0_2px_10px_rgba(204,255,0,0.3)] hover:shadow-[0_4px_15px_rgba(204,255,0,0.4)] transition-shadow"
+                        >
+                            SERENITY
+                        </button>
                         <button
                             onClick={onOpenMenu}
                             className="bg-transparent border-[1.5px] border-black w-12 h-12 flex flex-col justify-center items-center gap-[5px] cursor-pointer rounded-md hover:bg-black/5 transition-colors"
