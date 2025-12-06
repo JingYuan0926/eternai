@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import ContourBackground from '../components/ContourBackground';
+import ContourBackground from '../../components/ContourBackground';
 
 export default function KobePage({ onOpenMenu }) {
     const [hoveredCardId, setHoveredCardId] = useState(null);
     const [isMuted, setIsMuted] = useState(false);
     const videoRefs = useRef({});
 
-    // Mock data for the fan cards
     const cards = [
         {
             id: 1,

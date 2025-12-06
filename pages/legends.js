@@ -24,7 +24,7 @@ const LegendCard = ({ legend }) => {
 
     const handleClick = () => {
         if (legend.name === "KOBE BRYANT") {
-            router.push('/kobe');
+            router.push('/legends/kobe');
         }
     };
 
