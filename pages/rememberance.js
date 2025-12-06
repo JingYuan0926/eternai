@@ -52,6 +52,29 @@ export default function RemembrancePage({ onOpenMenu }) {
             <div className="absolute top-0 left-0 w-full px-12 py-10 flex justify-end items-start z-50 pointer-events-none">
                 {/* Top Right Buttons */}
                 <div className="pointer-events-auto flex gap-4 items-center">
+                    {isReconstructed ? (
+                        <>
+                            <button
+                                onClick={() => setIsReconstructed(false)}
+                                className="pointer-events-auto bg-[#1a1c1a] text-white border-none px-7 h-12 flex items-center justify-center text-sm font-bold cursor-pointer rounded-md font-sans tracking-wide shadow-lg hover:scale-105 transition-transform"
+                            >
+                                DELETE DATA
+                            </button>
+                            <button
+                                onClick={() => openModal('wizard')}
+                                className="pointer-events-auto bg-[#ccff00] text-black border-none px-7 h-12 flex items-center justify-center text-sm font-extrabold cursor-pointer rounded-md font-sans tracking-wide shadow-[0_2px_10px_rgba(204,255,0,0.3)] hover:shadow-[0_4px_15px_rgba(204,255,0,0.4)] transition-shadow"
+                            >
+                                EDIT HUMAN
+                            </button>
+                        </>
+                    ) : (
+                        <button
+                            onClick={() => openModal('wizard')}
+                            className="pointer-events-auto bg-[#ccff00] text-black border-none px-7 h-12 flex items-center justify-center text-sm font-extrabold cursor-pointer rounded-md font-sans tracking-wide shadow-[0_2px_10px_rgba(204,255,0,0.3)] hover:shadow-[0_4px_15px_rgba(204,255,0,0.4)] transition-shadow"
+                        >
+                            UPLOAD 0/3
+                        </button>
+                    )}
                     <button
                         onClick={onOpenMenu}
                         className="bg-transparent border-[1.5px] border-black w-12 h-12 flex flex-col justify-center items-center gap-[5px] cursor-pointer rounded-md hover:bg-black/5 transition-colors"
@@ -65,33 +88,6 @@ export default function RemembrancePage({ onOpenMenu }) {
             {/* Background Contour Lines */}
             <div className="absolute inset-0 z-0">
                 <ContourBackground density={2.2} />
-            </div>
-
-            {/* Bottom Right Button */}
-            <div className="absolute bottom-0 right-0 px-12 py-10 z-50 pointer-events-none flex flex-col items-end gap-3">
-                {isReconstructed ? (
-                    <>
-                        <button
-                            onClick={() => setIsReconstructed(false)}
-                            className="pointer-events-auto bg-[#1a1c1a] text-white border-none px-7 h-12 flex items-center justify-center text-sm font-bold cursor-pointer rounded-md font-sans tracking-wide shadow-lg hover:scale-105 transition-transform"
-                        >
-                            DELETE DATA
-                        </button>
-                        <button
-                            onClick={() => openModal('wizard')}
-                            className="pointer-events-auto bg-[#ccff00] text-black border-none px-7 h-12 flex items-center justify-center text-sm font-extrabold cursor-pointer rounded-md font-sans tracking-wide shadow-[0_2px_10px_rgba(204,255,0,0.3)] hover:shadow-[0_4px_15px_rgba(204,255,0,0.4)] transition-shadow"
-                        >
-                            EDIT HUMAN
-                        </button>
-                    </>
-                ) : (
-                    <button
-                        onClick={() => openModal('wizard')}
-                        className="pointer-events-auto bg-[#ccff00] text-black border-none px-7 h-12 flex items-center justify-center text-sm font-extrabold cursor-pointer rounded-md font-sans tracking-wide shadow-[0_2px_10px_rgba(204,255,0,0.3)] hover:shadow-[0_4px_15px_rgba(204,255,0,0.4)] transition-shadow"
-                    >
-                        UPLOAD 0/3
-                    </button>
-                )}
             </div>
 
             <div className="w-full h-[95vh] relative z-10 max-w-[95vw]">
