@@ -16,15 +16,14 @@ const legendsData = [
 ];
 
 // Custom Card Component with Notched Border
-const LegendCard = ({ legend }) => {
-    const router = useRouter();
+const LegendCard = ({ legend, onTriggerTransition }) => {
     // Unique IDs for SVG elements
     const pathId = `border-path-${legend.id}`;
     const clipId = `card-clip-${legend.id}`;
 
     const handleClick = () => {
         if (legend.name === "KOBE BRYANT") {
-            router.push('/legends/kobe');
+            onTriggerTransition('/legends/kobe');
         }
     };
 
@@ -127,7 +126,7 @@ const LegendCard = ({ legend }) => {
     );
 };
 
-export default function LegendsPage({ onOpenMenu }) {
+export default function LegendsPage({ onOpenMenu, onTriggerTransition }) {
     return (
         <div className="flex flex-col min-h-screen bg-white relative overflow-hidden">
             {/* Background Contour Lines */}
@@ -167,7 +166,7 @@ export default function LegendsPage({ onOpenMenu }) {
             <div className="relative z-10 w-full max-w-[1600px] mx-auto pt-40 px-6 md:px-12 pb-20">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
                     {legendsData.map((legend) => (
-                        <LegendCard key={legend.id} legend={legend} />
+                        <LegendCard key={legend.id} legend={legend} onTriggerTransition={onTriggerTransition} />
                     ))}
                 </div>
             </div>

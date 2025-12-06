@@ -58,7 +58,7 @@ export default function MenuOverlay({ isOpen, onClose, showContent = true }) {
 
     return (
         <div
-            className={`fixed inset-0 bg-[#1a1c1a] z-[200] flex flex-col md:flex-row transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] overflow-hidden ${isOpen ? 'translate-y-0 rounded-b-none' : '-translate-y-full rounded-b-[100%]'
+            className={`fixed inset-0 bg-[#1a1c1a] z-[400] flex flex-col md:flex-row transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] overflow-hidden ${isOpen ? 'translate-y-0 rounded-b-none' : '-translate-y-full rounded-b-[100%]'
                 }`}
         >
             {/* Background Contours (Darker & Static) */}
